@@ -17,31 +17,31 @@ namespace Library.WebUI.Controllers
         }
 
         // GET api/values
-        public HttpResponseMessage Get()
+        public HttpResponseMessage GetBooks()
         {
             return ToJson(repository.GetAllBooks().AsEnumerable());
         }
 
         // GET api/values/5
-        public HttpResponseMessage Get(int bookId)
+        public HttpResponseMessage GetBook(int bookId)
         {
             return ToJson(repository.GetBookById(bookId));
         }
 
         // POST api/values
-        public void Post(Book book)
+        public void CreateBook(Book book)
         {
             repository.CreateBook(book);
         }
 
         // PUT api/values/5
-        public void Put(int bookId, Book book)
+        public void UpdateBook(int bookId, Book book)
         {
             repository.UpdateBook(bookId, book);
         }
 
         // DELETE api/values/5
-        public void Delete(int bookId)
+        public void DeleteBook(int bookId)
         {
             repository.DeleteBook(bookId);
         }

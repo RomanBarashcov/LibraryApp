@@ -17,31 +17,31 @@ namespace Library.WebUI.Controllers
         }
 
         // GET api/values
-        public HttpResponseMessage Get()
+        public HttpResponseMessage GetAuthors()
         {
             return ToJson(repository.GetAllAuthors().AsQueryable());
         }
 
         // GET api/values/5
-        public HttpResponseMessage Get(int authorId)
+        public HttpResponseMessage GetAuthor(int authorId)
         {
             return ToJson(repository.GetAuthorById(authorId));
         }
 
         // POST api/values
-        public void Post(Author author)
+        public void CreateAuthor(Author author)
         {
             repository.CreateAuthor(author);
         }
 
         // PUT api/values/5
-        public void Put(int authorId, Author author)
+        public void UpdateAuthor(int authorId, Author author)
         {
             repository.UpdateAuthor(authorId, author);
         }
 
         // DELETE api/values/5
-        public void Delete(int authorId)
+        public void DeleteAuthor(int authorId)
         {
             repository.DeleteAuthor(authorId);
         }

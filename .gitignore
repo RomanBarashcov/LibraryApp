@@ -1,0 +1,12 @@
+# pakages folder
+/packages/
+# vs config files
+/.vs
+#
+/Library.Domain/obj
+/Library.Domain/bin
+/Library.WebUI/obj
+/Library.WebUI/bin
+/Library.WebUI/node_modules
+.gitignore
+

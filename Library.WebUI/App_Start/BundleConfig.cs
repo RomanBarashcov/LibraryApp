@@ -16,6 +16,12 @@ namespace Library.WebUI
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                    "~/node_modules/core-js/client/shim.min.js",
+                    "~/node_modules/zone.js/dist/zone.js",
+                    "~/node_modules/systemjs/dist/system.src.js",
+                    "~/systemjs.config.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));

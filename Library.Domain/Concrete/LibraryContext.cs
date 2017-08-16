@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Concrete
 {
-     public class LibraryContext : DbContext
-     {
+    public class LibraryContext : DbContext
+    {
             public DbSet<Author> Authors { get; set; }
             public DbSet<Book> Books { get; set; }
      }
