@@ -14,5 +14,6 @@ namespace Library.Domain.Abstracts
         void CreateBook(Book book);
         void UpdateBook(int bookId, Book book);
         void DeleteBook(int bookId);
+        IQueryable<Book> GetBookByAuthorId(int authorId);
     }
 }

@@ -1,0 +1,61 @@
+﻿<h1>Список книг</h1>
+<input type="button" value="Добавить" class="btn btn-default" (click)="addBook(hiddenAuthorId)" />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Год изд</td>
+            <td>Название</td>
+            <td>Описание</td>
+            <td>authorId</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let book of books">
+            <ng-template [ngTemplateOutlet]="loadTemplate(book)"
+                         [ngOutletContext]="{ $implicit: book}">
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+<div>{{statusMessage}}</div>
+
+
+<ng-template #readOnlyTemplate let-book>
+    <td>{{book.id}}</td>
+    <td>{{book.year}}</td>
+    <td>{{book.name}}</td>
+    <td>{{book.description}}</td>
+    <td>{{book.authorId}}</td>
+    <td>
+        <input type="button" value="Изменить" class="btn btn-default" (click)="editBook(book)" />
+    </td>
+    <td>
+        <input type="button" value="Удалить" class="btn btn-danger" (click)="deleteBook(book)" />
+    </td>
+</ng-template>
+
+
+<ng-template #editTemplate>
+    <td>
+        <input type="text" [(ngModel)]="editedBook.id" readonly disabled class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedBook.year" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedBook.name" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedBook.description" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="editedBook.authorId" class="form-control" />
+    </td>
+    <td>
+        <input type="button" value="Сохранить" (click)="saveBook()" class="btn btn-success" />
+    </td>
+    <td>
+        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+    </td>
+</ng-template>

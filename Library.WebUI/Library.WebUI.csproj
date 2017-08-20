@@ -228,11 +228,17 @@
     <Compile Include="Migrations\201708161058340_InitialCreate.Designer.cs">
       <DependentUpon>201708161058340_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708192134420_add-authorId-to-books_model.cs" />
+    <Compile Include="Migrations\201708192134420_add-authorId-to-books_model.Designer.cs">
+      <DependentUpon>201708192134420_add-authorId-to-books_model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="ClientApp\Components\Views\author.component.html" />
+    <Content Include="ClientApp\Components\Views\book.component.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -304,12 +310,16 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\app.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Components\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\app.module.ts" />
-    <TypeScriptCompile Include="ClientApp\author.ts" />
-    <TypeScriptCompile Include="ClientApp\child.component.ts" />
-    <TypeScriptCompile Include="ClientApp\http.service.ts" />
+    <TypeScriptCompile Include="ClientApp\Models\author.ts" />
+    <TypeScriptCompile Include="ClientApp\Components\author.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Models\book.ts" />
+    <TypeScriptCompile Include="ClientApp\Components\book.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Services\book.service.ts" />
     <TypeScriptCompile Include="ClientApp\main.ts" />
+    <TypeScriptCompile Include="ClientApp\Components\not-found.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Services\author.service.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -317,6 +327,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708161058340_InitialCreate.resx">
       <DependentUpon>201708161058340_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708192134420_add-authorId-to-books_model.resx">
+      <DependentUpon>201708192134420_add-authorId-to-books_model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

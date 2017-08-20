@@ -17,9 +17,9 @@ namespace Library.Domain.Concrete
             return db.Books;
         }
 
-        public Book GetBookById(int bookId)
+        public Book GetBookById(int id)
         {
-            Book book = db.Books.Find(bookId);
+            Book book = db.Books.Find(id);
             if (book != null)
             {
                 return book;
@@ -36,23 +36,33 @@ namespace Library.Domain.Concrete
             }
         }
 
-        public void UpdateBook(int bookId, Book book)
+        public void UpdateBook(int id, Book book)
         {
-            if (bookId == book.Id)
+            if (id == book.Id)
             {
                 db.Entry(book).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
 
-        public void DeleteBook(int bookId)
+        public void DeleteBook(int id)
         {
-            Book book = db.Books.Find(bookId);
+            Book book = db.Books.Find(id);
             if (book != null)
             {
                 db.Books.Remove(book);
                 db.SaveChanges();
             }
+        }
+
+        public IQueryable<Book> GetBookByAuthorId(int authorId)
+        {
+            IQueryable<Book> book = db.Books.Where(x => x.AuthorId == authorId);
+
+            if (book != null) {
+                return book;
+            }
+            return null; 
         }
     }
 }

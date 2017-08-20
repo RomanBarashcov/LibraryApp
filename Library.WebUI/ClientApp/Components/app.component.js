@@ -10,24 +10,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var http_service_1 = require("./http.service");
+var router_1 = require("@angular/router");
 var AppComponent = (function () {
-    function AppComponent(httpService) {
-        this.httpService = httpService;
-        this.authors = [];
+    function AppComponent(activatedRoute) {
+        this.activatedRoute = activatedRoute;
+        this.sub = activatedRoute.params.subscribe();
     }
-    AppComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.httpService.getAuthors()
-            .subscribe(function (data) { return _this.authors = data; }, function (error) { _this.error = error; console.log(error); });
+    AppComponent.prototype.ngOnDestroy = function () {
+        this.sub.unsubscribe();
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "<div> \n                    <ul>\n                      <li *ngFor=\"let author of authors\">\n                         <input type=\"hidden\" value=\"{{author?.id}}\" />\n                         <p>\u0410\u0432\u0442\u043E\u0440: {{author?.firstName}}  {{author?.serName}}</p>\n                      </li>\n                    </ul>\n                <div>{{error}}</div>\n               </div>",
-            providers: [http_service_1.HttpService]
+            template: "<div>\n                 <p>\n                    <a routerLink=\"/authors\">\u0412\u0441\u0435 \u0410\u0432\u0442\u043E\u0440\u044B</a> <a routerLink=\"/books\">\u0412\u0441\u0435 \u041A\u043D\u0438\u0433\u0438</a>\n                 </p>\n                    <router-outlet></router-outlet>\n                </div>",
         }),
-        __metadata("design:paramtypes", [http_service_1.HttpService])
+        __metadata("design:paramtypes", [router_1.ActivatedRoute])
     ], AppComponent);
     return AppComponent;
 }());

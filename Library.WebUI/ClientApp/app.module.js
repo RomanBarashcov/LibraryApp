@@ -9,15 +9,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
-var app_component_1 = require("./app.component");
+var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var app_component_1 = require("./Components/app.component");
+var author_component_1 = require("./Components/author.component");
+var book_component_1 = require("./Components/book.component");
+var not_found_component_1 = require("./Components/not-found.component");
+var appRoutes = [
+    { path: '', component: app_component_1.AppComponent },
+    { path: 'authors', component: author_component_1.AuthorComponent },
+    { path: 'books', component: book_component_1.BookComponent },
+    { path: 'booksByAuthor/:id', component: book_component_1.BookComponent },
+    { path: '**', component: not_found_component_1.NotFoundComponent }
+];
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
-            declarations: [app_component_1.AppComponent],
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, router_1.RouterModule.forRoot(appRoutes)],
+            declarations: [app_component_1.AppComponent, author_component_1.AuthorComponent, book_component_1.BookComponent, not_found_component_1.NotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

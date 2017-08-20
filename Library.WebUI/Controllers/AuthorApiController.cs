@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
+using System.Web.Http;
 
 namespace Library.WebUI.Controllers
 {
@@ -16,34 +17,32 @@ namespace Library.WebUI.Controllers
             this.repository = authorRepository;
         }
 
-        // GET api/values
         public HttpResponseMessage GetAuthors()
         {
-            return ToJson(repository.GetAllAuthors().AsQueryable());
+            return ToJson(repository.GetAllAuthors().AsEnumerable());
         }
 
-        // GET api/values/5
-        public HttpResponseMessage GetAuthor(int authorId)
+        public HttpResponseMessage GetAuthor(int id)
         {
-            return ToJson(repository.GetAuthorById(authorId));
+            return ToJson(repository.GetAuthorById(id));
         }
 
-        // POST api/values
-        public void CreateAuthor(Author author)
+        [HttpPost]
+        public void CreateAuthor([FromBody] Author author)
         {
             repository.CreateAuthor(author);
         }
 
-        // PUT api/values/5
-        public void UpdateAuthor(int authorId, Author author)
+        [HttpPut]
+        public void UpdateAuthor(int id, [FromBody] Author author)
         {
-            repository.UpdateAuthor(authorId, author);
+            repository.UpdateAuthor(id, author);
         }
 
-        // DELETE api/values/5
-        public void DeleteAuthor(int authorId)
+        [HttpDelete]
+        public void DeleteAuthor(int id)
         {
-            repository.DeleteAuthor(authorId);
+            repository.DeleteAuthor(id);
         }
     }
 }

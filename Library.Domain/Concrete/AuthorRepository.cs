@@ -19,7 +19,7 @@ namespace Library.Domain.Concrete
 
         public Author GetAuthorById(int authorId)
         {
-            Author author = db.Authors.Find(authorId);
+            Author author = db.Authors.FirstOrDefault(x=> x.Id == authorId);
             if (author != null)
             {
                 return author;
@@ -37,9 +37,12 @@ namespace Library.Domain.Concrete
 
         public void UpdateAuthor(int authorId, Author author)
         {
+            Author updatingAuthor = db.Authors.Find(authorId);
             if (authorId == author.Id)
             {
-                db.Entry(author).State = EntityState.Modified;
+                updatingAuthor.Name = author.Name;
+                updatingAuthor.Surname = author.Surname;
+                db.Entry(updatingAuthor).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
