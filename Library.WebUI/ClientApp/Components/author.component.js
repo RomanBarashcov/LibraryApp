@@ -29,9 +29,10 @@ var AuthorComponent = (function () {
         this.serv.getAuthors().subscribe(function (data) {
             return _this.authors = data;
         });
+        console.log("method loadBook in bookComponent" + this.authors);
     };
     AuthorComponent.prototype.addAuthor = function () {
-        this.editedAuthor = new author_1.Author(0, "", "");
+        this.editedAuthor = new author_1.Author("", "", "");
         this.authors.push(this.editedAuthor);
         this.isNewRecord = true;
     };

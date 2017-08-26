@@ -30,15 +30,6 @@ var BookService = (function () {
             return books;
         });
     };
-    BookService.prototype.getBookById = function (id) {
-        return this.http.get(this.url + '/' + id).map(function (resp) {
-            var bookList = resp.json();
-            var books = [];
-            var book = bookList;
-            books.push({ id: book.Id, year: book.Year, name: book.Name, description: book.Description, authorId: book.AuthorId });
-            return books;
-        });
-    };
     BookService.prototype.getBookByAuthorId = function (id) {
         return this.http.get(this.url + '/GetBookByAuthorId/' + id).map(function (resp) {
             var bookList = resp.json();

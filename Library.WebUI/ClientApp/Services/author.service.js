@@ -21,8 +21,8 @@ var AuthorService = (function () {
         return this.http.get(this.url)
             .map(function (resp) {
             var authorList = resp.json();
-            console.log(authorList);
             var authors = [];
+            console.log(authorList);
             for (var index in authorList) {
                 console.log(authorList[index]);
                 var author = authorList[index];

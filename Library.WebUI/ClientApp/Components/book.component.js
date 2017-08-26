@@ -37,10 +37,9 @@ var BookComponent = (function () {
         this.hiddenAuthorId = id;
     };
     BookComponent.prototype.addBook = function (authorId) {
-        this.editedBook = new book_1.Book(0, 0, "", "", authorId);
+        this.editedBook = new book_1.Book("", 0, "", "", authorId);
         this.books.push(this.editedBook);
         this.isNewRecord = true;
-        console.log("authorId= " + authorId);
     };
     BookComponent.prototype.editBook = function (book) {
         this.editedBook = new book_1.Book(book.id, book.year, book.name, book.description, book.authorId);

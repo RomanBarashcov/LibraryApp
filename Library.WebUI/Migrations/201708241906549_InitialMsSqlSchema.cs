@@ -1,14 +1,14 @@
-namespace Library.WebUI.Migrations
+namespace Library.Domain.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class InitialMsSqlSchema : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Authors",
+                "dbo.AuthorMsSqls",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -18,27 +18,27 @@ namespace Library.WebUI.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Books",
+                "dbo.BookMsSqls",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
                         Description = c.String(),
                         Year = c.Int(nullable: false),
-                        Author_Id = c.Int(),
+                        AuthorId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Authors", t => t.Author_Id)
-                .Index(t => t.Author_Id);
+                .ForeignKey("dbo.AuthorMsSqls", t => t.AuthorId, cascadeDelete: true)
+                .Index(t => t.AuthorId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Books", "Author_Id", "dbo.Authors");
-            DropIndex("dbo.Books", new[] { "Author_Id" });
-            DropTable("dbo.Books");
-            DropTable("dbo.Authors");
+            DropForeignKey("dbo.BookMsSqls", "AuthorId", "dbo.AuthorMsSqls");
+            DropIndex("dbo.BookMsSqls", new[] { "AuthorId" });
+            DropTable("dbo.BookMsSqls");
+            DropTable("dbo.AuthorMsSqls");
         }
     }
 }

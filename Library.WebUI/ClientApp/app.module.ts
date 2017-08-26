@@ -7,6 +7,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './Components/app.component';
 import { AuthorComponent } from './Components/author.component';
 import { BookComponent } from './Components/book.component';
+import { ConnectionStringComponent } from './Components/connectionString.component';
 import { NotFoundComponent } from './Components/not-found.component';
 
 const appRoutes: Routes = [
@@ -14,12 +15,13 @@ const appRoutes: Routes = [
     { path: 'authors', component: AuthorComponent },
     { path: 'books', component: BookComponent },
     { path: 'booksByAuthor/:id', component: BookComponent },
+    { path: 'connectionString', component: ConnectionStringComponent },
     { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes)],
-    declarations: [AppComponent, AuthorComponent, BookComponent, NotFoundComponent],
+    declarations: [AppComponent, AuthorComponent, BookComponent, ConnectionStringComponent, NotFoundComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

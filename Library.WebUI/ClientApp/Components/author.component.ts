@@ -34,10 +34,11 @@ export class AuthorComponent implements OnDestroy {
         this.serv.getAuthors().subscribe((data) => 
             this.authors = data
         );
+        console.log("method loadBook in bookComponent" + this.authors);
     }
 
     addAuthor() {
-        this.editedAuthor = new Author(0, "", "");
+        this.editedAuthor = new Author("", "", "");
         this.authors.push(this.editedAuthor);
         this.isNewRecord = true;
     }

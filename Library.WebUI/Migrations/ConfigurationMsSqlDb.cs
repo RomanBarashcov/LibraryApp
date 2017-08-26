@@ -1,15 +1,15 @@
-namespace Library.WebUI.Migrations
+namespace Library.Domain.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Library.Domain.Concrete.LibraryContext>
+    internal sealed class ConfigurationMsSqlDb : DbMigrationsConfiguration<Library.Domain.Concrete.LibraryContext>
     {
-        public Configuration()
+        public ConfigurationMsSqlDb()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(Library.Domain.Concrete.LibraryContext context)

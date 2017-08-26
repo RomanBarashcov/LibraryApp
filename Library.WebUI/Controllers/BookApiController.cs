@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -17,14 +18,10 @@ namespace Library.WebUI.Controllers
             this.repository = bookRepository;
         }
 
-        public HttpResponseMessage GetBooks()
+        public async Task<HttpResponseMessage> GetBooks()
         {
-            return ToJson(repository.GetAllBooks().AsEnumerable());
-        }
-
-        public HttpResponseMessage GetBook(int id)
-        {
-            return ToJson(repository.GetBookById(id));
+            IEnumerable<Book> Books = await repository.GetAllBooks();
+            return ToJson(Books);
         }
 
         [HttpPost]
@@ -34,21 +31,22 @@ namespace Library.WebUI.Controllers
         }
 
         [HttpPut]
-        public void UpdateBook(int id, [FromBody] Book book)
+        public void UpdateBook(string id, [FromBody] Book book)
         {
             repository.UpdateBook(id, book);
         }
 
         [HttpDelete]
-        public void DeleteBook(int id)
+        public void DeleteBook(string id)
         {
             repository.DeleteBook(id);
         }
 
         [Route("BookApi/GetBookByAuthorId/{id}")]
-        public HttpResponseMessage GetBookByAuthorId(int id)
+        public async Task<HttpResponseMessage> GetBookByAuthorId(string id)
         {
-            return ToJson(repository.GetBookByAuthorId(id).AsEnumerable());
+            IEnumerable<Book> Books = await repository.GetBookByAuthorId(id);
+            return ToJson(Books);
         }
     }
 }

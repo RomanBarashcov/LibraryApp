@@ -22,7 +22,7 @@ export class BookComponent implements OnDestroy {
     editedBook: Book;
     isNewRecord: boolean;
     statusMessage: string;
-    hiddenAuthorId: number;
+    hiddenAuthorId: string;
     private sub: Subscription;
     private id: number;
 
@@ -35,14 +35,14 @@ export class BookComponent implements OnDestroy {
             this.books = data);
     }
 
-    loadBookByAuthor(id: number) {
+    loadBookByAuthor(id: string) {
         this.serv.getBookByAuthorId(id).subscribe((data) =>
             this.books = data);
         this.hiddenAuthorId = id;
     }
 
-    addBook(authorId: number) {
-        this.editedBook = new Book(0, 0, "", "", authorId);
+    addBook(authorId: string) {
+        this.editedBook = new Book("", 0, "", "", authorId);
         this.books.push(this.editedBook);
         this.isNewRecord = true;
     }

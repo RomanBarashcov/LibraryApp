@@ -16,9 +16,8 @@ export class AuthorService {
                 .map((resp: Response) => {
 
                     let authorList = resp.json();
-                    console.log(authorList);
                     let authors: Author[] = [];
-
+                    console.log(authorList);
                     for (let index in authorList) {
                         console.log(authorList[index]);
                         let author = authorList[index];
@@ -35,13 +34,13 @@ export class AuthorService {
         return this.http.post(this.url, body, { headers: headers });
     }
 
-    updateAuthor(id: number, obj: Author) {
+    updateAuthor(id: string, obj: Author) {
         let headers = new Headers({ 'Content-Type': 'application/json;charser=utf8' });
         const body = JSON.stringify(obj);
         return this.http.put(this.url + '/' + id, body, { headers: headers });
     }
 
-    deleteUser(id: number) {
+    deleteUser(id: string) {
         return this.http.delete(this.url + '/' + id);
     }
 }

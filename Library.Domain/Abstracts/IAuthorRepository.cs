@@ -9,10 +9,9 @@ namespace Library.Domain.Abstracts
 {
     public interface IAuthorRepository
     {
-        IQueryable<Author> GetAllAuthors();
-        Author GetAuthorById(int authorId);
+        Task<IEnumerable<Author>> GetAllAuthors();
         void CreateAuthor(Author author);
-        void UpdateAuthor(int authorId, Author author);
-        void DeleteAuthor(int authorId);
+        void UpdateAuthor(string authorId, Author author);
+        void DeleteAuthor(string authorId);
     }
 }

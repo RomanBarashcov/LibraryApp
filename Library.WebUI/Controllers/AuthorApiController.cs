@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -17,14 +18,10 @@ namespace Library.WebUI.Controllers
             this.repository = authorRepository;
         }
 
-        public HttpResponseMessage GetAuthors()
+        public async Task<HttpResponseMessage> GetAuthors()
         {
-            return ToJson(repository.GetAllAuthors().AsEnumerable());
-        }
-
-        public HttpResponseMessage GetAuthor(int id)
-        {
-            return ToJson(repository.GetAuthorById(id));
+            IEnumerable<Author> Authors = await repository.GetAllAuthors();
+            return ToJson(Authors);    
         }
 
         [HttpPost]
@@ -34,13 +31,13 @@ namespace Library.WebUI.Controllers
         }
 
         [HttpPut]
-        public void UpdateAuthor(int id, [FromBody] Author author)
+        public void UpdateAuthor(string id, [FromBody] Author author)
         {
             repository.UpdateAuthor(id, author);
         }
 
         [HttpDelete]
-        public void DeleteAuthor(int id)
+        public void DeleteAuthor(string id)
         {
             repository.DeleteAuthor(id);
         }

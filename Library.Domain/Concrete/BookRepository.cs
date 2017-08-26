@@ -1,5 +1,6 @@
 ﻿using Library.Domain.Abstracts;
 using Library.Domain.Entities;
+using Library.Domain.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,43 +12,56 @@ namespace Library.Domain.Concrete
 {
     public class BookRepository : IBookRepository
     {
+        private IEnumerable<Book> result = null;
         private LibraryContext db = new LibraryContext();
-        public IQueryable<Book> GetAllBooks()
-        {
-            return db.Books;
-        }
 
-        public Book GetBookById(int id)
+        public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            Book book = db.Books.Find(id);
-            if (book != null)
+            List<BookMsSql> BookList = db.Books.ToList();
+
+            if(BookList != null)
             {
-                return book;
+                MssqlBookDataHelper Books = new MssqlBookDataHelper(BookList);
+                result = Books.GetIEnumerubleDbResult();
             }
-            return null;
+
+            return await Task.Run(() => { return result; });
         }
 
         public void CreateBook(Book book)
         {
             if (book != null)
             {
-                db.Books.Add(book);
+                int authorId = Convert.ToInt32(book.AuthorId);
+                BookMsSql newBook = new BookMsSql { Name = book.Name , Description = book.Description, Year = book.Year, AuthorId = authorId };
+                db.Books.Add(newBook); 
                 db.SaveChanges();
             }
         }
 
-        public void UpdateBook(int id, Book book)
+        public void UpdateBook(string id, Book book)
         {
-            if (id == book.Id)
+            int upBookId = Convert.ToInt32(id);
+            int Book_book_id = Convert.ToInt32(book.Id);
+            BookMsSql updatingBook = null;
+            updatingBook = db.Books.Find(upBookId);
+
+            if (upBookId == Book_book_id)
             {
-                db.Entry(book).State = EntityState.Modified;
+                updatingBook.Year = book.Year;
+                updatingBook.Name = book.Name;
+                updatingBook.Description = book.Description;
+                db.Entry(updatingBook).State = EntityState.Modified;
                 db.SaveChanges();
             }
         }
 
-        public void DeleteBook(int id)
+        public void DeleteBook(string id)
         {
-            Book book = db.Books.Find(id);
+            BookMsSql book = null;
+            int delBookId = Convert.ToInt32(id);
+            book = db.Books.Find(delBookId);
+
             if (book != null)
             {
                 db.Books.Remove(book);
@@ -55,14 +69,18 @@ namespace Library.Domain.Concrete
             }
         }
 
-        public IQueryable<Book> GetBookByAuthorId(int authorId)
+        public async Task<IEnumerable<Book>> GetBookByAuthorId(string authorId)
         {
-            IQueryable<Book> book = db.Books.Where(x => x.AuthorId == authorId);
+            int author_Id = Convert.ToInt32(authorId);
+            List<BookMsSql> BookList = db.Books.Where(x => x.AuthorId == author_Id).ToList();
 
-            if (book != null) {
-                return book;
+            if (BookList != null)
+            {
+                MssqlBookDataHelper Books = new MssqlBookDataHelper(BookList);
+                result = Books.GetIEnumerubleDbResult();
             }
-            return null; 
+
+            return await Task.Run(() => { return result; }); 
         }
     }
 }

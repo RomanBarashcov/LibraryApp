@@ -1,5 +1,6 @@
 ﻿using Library.Domain.Abstracts;
 using Library.Domain.Entities;
+using Library.Domain.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,49 +12,57 @@ namespace Library.Domain.Concrete
 {
     public class AuthorRepository : IAuthorRepository
     {
+        private IEnumerable<Author> result = null;
         private LibraryContext db = new LibraryContext();
-        public IQueryable<Author> GetAllAuthors()
+
+        public async Task<IEnumerable<Author>> GetAllAuthors()
         {
-            return db.Authors;
+            List<AuthorMsSql> AuthorList = db.Authors.ToList();
+
+            if (AuthorList != null)
+            {
+                MssqlAuthorDataHelper Authors = new MssqlAuthorDataHelper(AuthorList);
+                result = Authors.GetIEnumerubleDbResult();
+            }
+
+            return await Task.Run(() => { return this.result; });
         }
 
-        public Author GetAuthorById(int authorId)
-        {
-            Author author = db.Authors.FirstOrDefault(x=> x.Id == authorId);
-            if (author != null)
-            {
-                return author;
-            }
-            return null;
-        }
         public void CreateAuthor(Author author)
         {
             if (author != null)
             {
-                db.Authors.Add(author);
+                AuthorMsSql newAuthor = new AuthorMsSql{ Name = author.Name, Surname = author.Surname  };
+                db.Authors.Add(newAuthor); 
                 db.SaveChanges();
             }
         }
 
-        public void UpdateAuthor(int authorId, Author author)
+        public void UpdateAuthor(string authorId, Author author)
         {
-            Author updatingAuthor = db.Authors.Find(authorId);
-            if (authorId == author.Id)
+            int upAuthorId = Convert.ToInt32(authorId);
+            int Author_author_id = Convert.ToInt32(author.Id);
+            AuthorMsSql updatingAuthor = null;
+            updatingAuthor = db.Authors.Find(upAuthorId);
+ 
+            if (upAuthorId == Author_author_id)
             {
                 updatingAuthor.Name = author.Name;
                 updatingAuthor.Surname = author.Surname;
                 db.Entry(updatingAuthor).State = EntityState.Modified;
-                db.SaveChanges();
-            }
+                db.SaveChanges(); 
+             }
         }
 
-        public void DeleteAuthor(int authorId)
+        public void DeleteAuthor(string authorId)
         {
-            Author author = db.Authors.Find(authorId);
+            int delAuthorId = Convert.ToInt32(authorId);
+            AuthorMsSql author = db.Authors.Find(delAuthorId);
+
             if (author != null)
             {
-                db.Authors.Remove(author);
-                db.SaveChanges();
+                 db.Authors.Remove(author);
+                 db.SaveChanges();
             }
         }
     }

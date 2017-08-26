@@ -16,14 +16,29 @@ namespace Library.WebUI.App_Start
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static bool DefaultConnection = true;
+        
+        public static void InitConnection(string conString)
+        {
+            if (conString == "DefaultConnection")
+            {
+                DefaultConnection = true;
+                Stop();
+                Start();
+            }
+            else
+            {
+                DefaultConnection = false;
+                Stop();
+                Start();
+            }
+        }
 
         /// <summary>
         /// Starts the application
         /// </summary>
         public static void Start() 
         {
-            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
-            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
         
@@ -63,8 +78,16 @@ namespace Library.WebUI.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IAuthorRepository>().To<AuthorRepository>().InSingletonScope();
-            kernel.Bind<IBookRepository>().To<BookRepository>().InSingletonScope();
+            if (DefaultConnection)
+            {
+                kernel.Bind<IAuthorRepository>().To<AuthorRepository>().InSingletonScope();
+                kernel.Bind<IBookRepository>().To<BookRepository>().InSingletonScope();
+            }
+            else
+            {
+                kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>().InSingletonScope();
+                kernel.Bind<IBookRepository>().To<BookMongoDbRepository>().InSingletonScope();
+            }
         }        
     }
 }

@@ -27,20 +27,7 @@ export class BookService {
             });
     }
 
-    getBookById(id: number): Observable<Book[]> {
-
-        return this.http.get(this.url + '/' + id).map((resp: Response) => {
-
-            let bookList = resp.json();
-            let books: Book[] = [];
-            let book = bookList;
-            books.push({ id: book.Id, year: book.Year, name: book.Name, description: book.Description, authorId: book.AuthorId });
-            
-            return books;
-        });
-    }
-
-    getBookByAuthorId(id: number): Observable<Book[]> {
+    getBookByAuthorId(id: string): Observable<Book[]> {
 
         return this.http.get(this.url + '/GetBookByAuthorId/' + id).map((resp: Response) => {
 
@@ -61,13 +48,13 @@ export class BookService {
             return this.http.post(this.url, body, { headers: headers });
         }
 
-        updateBook(id: number, obj: Book) {
+        updateBook(id: string, obj: Book) {
             let headers = new Headers({ 'Content-Type': 'application/json;charser=utf8' });
             const body = JSON.stringify(obj);
             return this.http.put(this.url + '/' + id, body, { headers: headers });
         }
 
-        deleteBook(id: number) {
+        deleteBook(id: string) {
             return this.http.delete(this.url + '/' + id);
         }
     }

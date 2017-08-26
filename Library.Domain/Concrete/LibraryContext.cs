@@ -10,8 +10,10 @@ namespace Library.Domain.Concrete
 {
     public class LibraryContext : DbContext
     {
-            public DbSet<Author> Authors { get; set; }
-            public DbSet<Book> Books { get; set; }
+        public LibraryContext(): base("DefaultConnection") { }
+
+            public DbSet<AuthorMsSql> Authors { get; set; }
+            public DbSet<BookMsSql> Books { get; set; }
      }
     
 }

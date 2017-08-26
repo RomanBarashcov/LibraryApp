@@ -9,11 +9,10 @@ namespace Library.Domain.Abstracts
 {
     public interface IBookRepository
     {
-        IQueryable<Book> GetAllBooks();
-        Book GetBookById(int bookId);
+        Task<IEnumerable<Book>> GetAllBooks();
         void CreateBook(Book book);
-        void UpdateBook(int bookId, Book book);
-        void DeleteBook(int bookId);
-        IQueryable<Book> GetBookByAuthorId(int authorId);
+        void UpdateBook(string bookId, Book book);
+        void DeleteBook(string bookId);
+        Task<IEnumerable<Book>> GetBookByAuthorId(string authorId);
     }
 }
