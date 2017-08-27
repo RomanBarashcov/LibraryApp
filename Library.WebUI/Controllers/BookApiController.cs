@@ -25,21 +25,24 @@ namespace Library.WebUI.Controllers
         }
 
         [HttpPost]
-        public void CreateBook([FromBody] Book book)
+        public async Task<HttpResponseMessage> CreateBook([FromBody] Book book)
         {
-            repository.CreateBook(book);
+            HttpResponseMessage result = await repository.CreateBook(book);
+            return result;
         }
 
         [HttpPut]
-        public void UpdateBook(string id, [FromBody] Book book)
+        public async Task<HttpResponseMessage> UpdateBook(string id, [FromBody] Book book)
         {
-            repository.UpdateBook(id, book);
+            HttpResponseMessage result = await repository.UpdateBook(id, book);
+            return result;
         }
 
         [HttpDelete]
-        public void DeleteBook(string id)
+        public async Task<HttpResponseMessage> DeleteBook(string id)
         {
-            repository.DeleteBook(id);
+            HttpResponseMessage result = await repository.DeleteBook(id);
+            return result;
         }
 
         [Route("BookApi/GetBookByAuthorId/{id}")]

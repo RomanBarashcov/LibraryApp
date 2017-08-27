@@ -3,6 +3,7 @@ using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -25,21 +26,24 @@ namespace Library.WebUI.Controllers
         }
 
         [HttpPost]
-        public void CreateAuthor([FromBody] Author author)
+        public async Task<HttpResponseMessage> CreateAuthor([FromBody] Author author)
         {
-            repository.CreateAuthor(author);
+            HttpResponseMessage result = await repository.CreateAuthor(author);
+            return result;
         }
 
         [HttpPut]
-        public void UpdateAuthor(string id, [FromBody] Author author)
+        public async Task<HttpResponseMessage> UpdateAuthor(string id, [FromBody] Author author)
         {
-            repository.UpdateAuthor(id, author);
+            HttpResponseMessage result = await repository.UpdateAuthor(id, author);
+            return result;
         }
 
         [HttpDelete]
-        public void DeleteAuthor(string id)
+        public async Task<HttpResponseMessage> DeleteAuthor(string id)
         {
-            repository.DeleteAuthor(id);
+            HttpResponseMessage result = await repository.DeleteAuthor(id);
+            return result;
         }
     }
 }

@@ -68,22 +68,22 @@
   <ItemGroup>
     <Compile Include="Abstracts\IAuthorRepository.cs" />
     <Compile Include="Abstracts\IBookRepository.cs" />
-    <Compile Include="Concrete\AuthorMongoDbRepository.cs" />
-    <Compile Include="Concrete\AuthorRepository.cs" />
-    <Compile Include="Concrete\BookMongoDbRepository.cs" />
-    <Compile Include="Concrete\BookRepository.cs" />
+    <Compile Include="Concrete\MongoDbConcrete\AuthorMongoDbRepository.cs" />
+    <Compile Include="Concrete\MongoDbConcrete\BookMongoDbRepository.cs" />
+    <Compile Include="Concrete\MssqlConcrete\AuthorRepository.cs" />
+    <Compile Include="Concrete\MssqlConcrete\BookRepository.cs" />
     <Compile Include="Concrete\LibraryContext.cs" />
     <Compile Include="Concrete\LibraryMongoDbContext.cs" />
     <Compile Include="Entities\Author.cs" />
-    <Compile Include="Entities\AuthorMongoDb.cs" />
-    <Compile Include="Entities\BookMongoDb.cs" />
-    <Compile Include="Entities\AuthorMsSql.cs" />
+    <Compile Include="Entities\MongoDbEntities\AuthorMongoDb.cs" />
+    <Compile Include="Entities\MongoDbEntities\BookMongoDb.cs" />
+    <Compile Include="Entities\MssqlEntities\AuthorMsSql.cs" />
     <Compile Include="Entities\Book.cs" />
-    <Compile Include="Entities\BookMsSql.cs" />
-    <Compile Include="Helper\MongoDbAuthorDataHelper.cs" />
-    <Compile Include="Helper\MongoDbBookDataHelper.cs" />
-    <Compile Include="Helper\MssqlAuthorDataHelper.cs" />
-    <Compile Include="Helper\MssqlBookDataHelper.cs" />
+    <Compile Include="Entities\MssqlEntities\BookMsSql.cs" />
+    <Compile Include="Helper\MongoDbDataHelper\MongoDbAuthorDataHelper.cs" />
+    <Compile Include="Helper\MongoDbDataHelper\MongoDbBookDataHelper.cs" />
+    <Compile Include="Helper\MssqlDataHelper\MssqlAuthorDataHelper.cs" />
+    <Compile Include="Helper\MssqlDataHelper\MssqlBookDataHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
