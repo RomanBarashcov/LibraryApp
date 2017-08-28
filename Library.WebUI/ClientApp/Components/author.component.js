@@ -32,7 +32,6 @@ var AuthorComponent = (function () {
             _this.authors = data;
             _this.setPage(1);
         });
-        console.log("method loadAuthors() in authorComponent" + this.authors);
     };
     AuthorComponent.prototype.addAuthor = function () {
         this.editedAuthor = new author_1.Author("", "", "");
@@ -56,7 +55,7 @@ var AuthorComponent = (function () {
         if (this.isNewRecord) {
             this.serv.createAuthor(this.editedAuthor).subscribe(function (resp) {
                 if (resp.ok) {
-                    _this.statusMessage = 'Данные сохранены успешно';
+                    _this.statusMessage = 'Saved successfully!';
                     _this.ngOnInit();
                 }
             });
@@ -66,7 +65,7 @@ var AuthorComponent = (function () {
         else {
             this.serv.updateAuthor(this.editedAuthor.id, this.editedAuthor).subscribe(function (resp) {
                 if (resp.ok) {
-                    _this.statusMessage = 'Данные успешно обновлены';
+                    _this.statusMessage = 'Updated successfully!';
                     _this.ngOnInit();
                 }
             });
@@ -80,7 +79,7 @@ var AuthorComponent = (function () {
         var _this = this;
         this.serv.deleteUser(author.id).subscribe(function (resp) {
             if (resp.ok) {
-                _this.statusMessage = 'Данные успешно удалены',
+                _this.statusMessage = 'Deleted successfully!',
                     _this.ngOnInit();
             }
         });

@@ -36,9 +36,10 @@ var BookComponent = (function () {
     BookComponent.prototype.loadBookByAuthor = function (id) {
         var _this = this;
         this.serv.getBookByAuthorId(id).subscribe(function (data) {
-            return _this.books = data;
+            _this.books = data;
+            _this.setPage(1);
+            _this.hiddenAuthorId = id;
         });
-        this.hiddenAuthorId = id;
     };
     BookComponent.prototype.addBook = function (authorId) {
         this.editedBook = new book_1.Book("", 0, "", "", authorId);
@@ -62,7 +63,7 @@ var BookComponent = (function () {
         if (this.isNewRecord) {
             this.serv.createBook(this.editedBook).subscribe(function (resp) {
                 if (resp.ok) {
-                    _this.statusMessage = 'Данные сохранены успешно';
+                    _this.statusMessage = 'Saved successfully!';
                     _this.loadBooks();
                 }
             });
@@ -72,7 +73,7 @@ var BookComponent = (function () {
         else {
             this.serv.updateBook(this.editedBook.id, this.editedBook).subscribe(function (resp) {
                 if (resp.ok) {
-                    _this.statusMessage = 'Данные успешно обновлены';
+                    _this.statusMessage = 'Updated successfully!';
                     _this.loadBooks();
                 }
             });
@@ -86,7 +87,7 @@ var BookComponent = (function () {
         var _this = this;
         this.serv.deleteBook(book.id).subscribe(function (resp) {
             if (resp.ok) {
-                _this.statusMessage = 'Данные успешно удалены',
+                _this.statusMessage = 'Deleted successfully!',
                     _this.loadBooks();
             }
         });

@@ -1,11 +1,11 @@
-﻿<h1>Список авторов</h1>
-<input type="button" value="Добавить" class="btn btn-default" (click)="addAuthor()" />
+﻿<h1>Authors List</h1>
+<input type="button" value="Add Author" class="btn btn-default" (click)="addAuthor()" />
 <table class="table table-striped">
     <thead>
         <tr>
             <td>Id</td>
-            <td>Имя</td>
-            <td>Фамилия</td>
+            <td>Name</td>
+            <td>Surname</td>
             <td></td>
             <td></td>
             <td></td>
@@ -48,13 +48,13 @@
     <td>{{author.name}}</td>
     <td>{{author.surname}}</td>
     <td>
-        <input type="button" value="Книги автора" class="btn btn-default" (click)="routeToBooks(author)" />
+        <input type="button" value="Books by Author" class="btn btn-default" (click)="routeToBooks(author)" />
     </td>
     <td>
-        <input type="button" value="Изменить" class="btn btn-default" (click)="editAuthor(author)" />
+        <input type="button" value="Edit" class="btn btn-default" (click)="editAuthor(author)" />
     </td>
     <td>
-        <input type="button" value="Удалить" class="btn btn-danger" (click)="deleteAuthor(author)" />
+        <input type="button" value="Delete" class="btn btn-danger" (click)="deleteAuthor(author)" />
     </td>
 </ng-template>
 
@@ -69,9 +69,9 @@
         <input type="text" [(ngModel)]="editedAuthor.surname" class="form-control" />
     </td>
     <td>
-        <input type="button" value="Сохранить" (click)="saveAuthor()" class="btn btn-success" />
+        <input type="button" value="Save" (click)="saveAuthor()" class="btn btn-success" />
     </td>
     <td>
-        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+        <input type="button" value="Cencel" (click)="cancel()" class="btn btn-warning" />
     </td>
 </ng-template>

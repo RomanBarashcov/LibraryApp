@@ -22,7 +22,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "<div>\n                 <p>\n                    <a routerLink=\"/authors\">\u0412\u0441\u0435 \u0410\u0432\u0442\u043E\u0440\u044B</a> <a routerLink=\"/books\">\u0412\u0441\u0435 \u041A\u043D\u0438\u0433\u0438</a> <a routerLink=\"/connectionString\">\u0412\u044B\u0431\u043E\u0440 \u0411\u0434</a>\n                 </p>\n                    <router-outlet></router-outlet>\n                </div>",
+            template: "<div>\n                 <p>\n                    <a routerLink=\"/authors\">All Authors</a> <a routerLink=\"/books\">All Books</a> <a routerLink=\"/connectionString\">Chose Db</a>\n                 </p>\n                    <router-outlet></router-outlet>\n                </div>",
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute])
     ], AppComponent);

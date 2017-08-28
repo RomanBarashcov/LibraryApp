@@ -6,9 +6,9 @@ import { connectionStringService } from '../Services/connectionString.service';
 
 @Component({
     selector: 'chose-connection-string',
-    template: `<div><h2> Выбор БД </h2>
+    template: `<div><h2> Chose Db </h2>
         <p><a (click)="choseDb(DefaultConnection)">MsSql</a> <a (click)="choseDb(MongoDbConnection)">MongoDb</a></p>
-<div>{{error}}</div>
+    <div>{{error}}{{chosedDb}}</div>
     </div>`,
     providers: [connectionStringService]
 })
@@ -20,6 +20,7 @@ export class ConnectionStringComponent implements OnDestroy {
     MongoDbConnection: string = "MongoDbConnection";
     conStringDb: СonnectionString;
     error: any;
+    chosedDb: string;
 
     constructor(private serv: connectionStringService, private activatedRoute: ActivatedRoute, private router: Router) {
         this.sub = activatedRoute.params.subscribe();
@@ -28,6 +29,9 @@ export class ConnectionStringComponent implements OnDestroy {
     choseDb(conString: string) {
         this.conStringDb = new СonnectionString(conString);
         this.serv.sendConnectionString(this.conStringDb).subscribe(error => { this.error = error; console.log(error); });
+        if (this.error == null) {
+            this.chosedDb = " Chosed " + conString + " Db successful! You can chose any tab!";
+        }
     }
 
     redirectToAuthors() {

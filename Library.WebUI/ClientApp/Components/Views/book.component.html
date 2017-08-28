@@ -1,12 +1,12 @@
-﻿<h1>Список книг</h1>
-<input type="button" value="Добавить" class="btn btn-default" (click)="addBook(hiddenAuthorId)" />
+﻿<h1>Books List</h1>
+<input type="button" value="Add Book" class="btn btn-default" (click)="addBook(hiddenAuthorId)" />
 <table class="table table-striped">
     <thead>
         <tr>
             <td>Id</td>
-            <td>Год изд</td>
-            <td>Название</td>
-            <td>Описание</td>
+            <td>Year</td>
+            <td>Name</td>
+            <td>Description</td>
             <td>authorId</td>
         </tr>
     </thead>
@@ -48,10 +48,10 @@
     <td>{{book.description}}</td>
     <td>{{book.authorId}}</td>
     <td>
-        <input type="button" value="Изменить" class="btn btn-default" (click)="editBook(book)" />
+        <input type="button" value="Edit" class="btn btn-default" (click)="editBook(book)" />
     </td>
     <td>
-        <input type="button" value="Удалить" class="btn btn-danger" (click)="deleteBook(book)" />
+        <input type="button" value="Delete" class="btn btn-danger" (click)="deleteBook(book)" />
     </td>
 </ng-template>
 
@@ -73,9 +73,9 @@
         <input type="text" [(ngModel)]="editedBook.authorId" class="form-control" />
     </td>
     <td>
-        <input type="button" value="Сохранить" (click)="saveBook()" class="btn btn-success" />
+        <input type="button" value="Save" (click)="saveBook()" class="btn btn-success" />
     </td>
     <td>
-        <input type="button" value="Отмена" (click)="cancel()" class="btn btn-warning" />
+        <input type="button" value="Cencel" (click)="cancel()" class="btn btn-warning" />
     </td>
 </ng-template>

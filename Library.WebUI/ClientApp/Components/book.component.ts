@@ -43,9 +43,11 @@ export class BookComponent implements OnDestroy {
     }
 
     loadBookByAuthor(id: string) {
-        this.serv.getBookByAuthorId(id).subscribe((data) =>
-            this.books = data);
-        this.hiddenAuthorId = id;
+        this.serv.getBookByAuthorId(id).subscribe((data) => {
+            this.books = data
+            this.setPage(1);
+            this.hiddenAuthorId = id;
+        });
     }
 
     addBook(authorId: string) {
@@ -71,7 +73,7 @@ export class BookComponent implements OnDestroy {
         if (this.isNewRecord) {
             this.serv.createBook(this.editedBook).subscribe((resp: Response) => {
                 if (resp.ok) {
-                    this.statusMessage = 'Данные сохранены успешно';
+                    this.statusMessage = 'Saved successfully!';
                     this.loadBooks();
                 }
             });
@@ -80,7 +82,7 @@ export class BookComponent implements OnDestroy {
         } else {
             this.serv.updateBook(this.editedBook.id, this.editedBook).subscribe((resp: Response) => {
                 if (resp.ok) {
-                    this.statusMessage = 'Данные успешно обновлены';
+                    this.statusMessage = 'Updated successfully!';
                     this.loadBooks();
                 }
             });
@@ -95,7 +97,7 @@ export class BookComponent implements OnDestroy {
     deleteBook(book: Book) {
         this.serv.deleteBook(book.id).subscribe((resp: Response) => {
             if (resp.ok) {
-                this.statusMessage = 'Данные успешно удалены',
+                this.statusMessage = 'Deleted successfully!',
                     this.loadBooks();
             }
         });

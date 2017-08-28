@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
     selector: 'my-app',
     template: `<div>
                  <p>
-                    <a routerLink="/authors">Все Авторы</a> <a routerLink="/books">Все Книги</a> <a routerLink="/connectionString">Выбор Бд</a>
+                    <a routerLink="/authors">All Authors</a> <a routerLink="/books">All Books</a> <a routerLink="/connectionString">Chose Db</a>
                  </p>
                     <router-outlet></router-outlet>
                 </div>`,

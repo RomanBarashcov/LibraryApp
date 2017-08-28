@@ -38,7 +38,6 @@ export class AuthorComponent implements OnDestroy, OnInit {
             this.authors = data
             this.setPage(1);
         });
-        console.log("method loadAuthors() in authorComponent" + this.authors);
     }
 
     addAuthor() {
@@ -65,7 +64,7 @@ export class AuthorComponent implements OnDestroy, OnInit {
             this.serv.createAuthor(this.editedAuthor).subscribe((resp: Response) => {
                 if (resp.ok) {
 
-                    this.statusMessage = 'Данные сохранены успешно';
+                    this.statusMessage = 'Saved successfully!';
                     this.ngOnInit();
                 }
             });
@@ -74,7 +73,7 @@ export class AuthorComponent implements OnDestroy, OnInit {
         } else {
             this.serv.updateAuthor(this.editedAuthor.id, this.editedAuthor).subscribe((resp: Response) => {
                 if (resp.ok) {
-                    this.statusMessage = 'Данные успешно обновлены';
+                    this.statusMessage = 'Updated successfully!';
                     this.ngOnInit();
                 }
             });
@@ -89,7 +88,7 @@ export class AuthorComponent implements OnDestroy, OnInit {
     deleteAuthor(author: Author) {
         this.serv.deleteUser(author.id).subscribe((resp: Response) => {
             if (resp.ok) {
-                this.statusMessage = 'Данные успешно удалены',
+                this.statusMessage = 'Deleted successfully!',
                     this.ngOnInit();
             }
         });
