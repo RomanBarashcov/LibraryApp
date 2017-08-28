@@ -10,7 +10,10 @@
     "lib": [ "es2015", "dom" ],
     "noImplicitAny": true,
     "suppressImplicitAnyIndexErrors": true,
-        "noStrictGenericChecks": true
+    "noStrictGenericChecks": true,
+    "typeRoots": [
+        "../node_modules/@types/"
+      ]
     
   }
 }

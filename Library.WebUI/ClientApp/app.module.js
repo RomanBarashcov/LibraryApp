@@ -11,6 +11,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
+var pagination_service_1 = require("./Services/pagination.service");
 var app_component_1 = require("./Components/app.component");
 var author_component_1 = require("./Components/author.component");
 var book_component_1 = require("./Components/book.component");
@@ -31,6 +32,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, router_1.RouterModule.forRoot(appRoutes)],
             declarations: [app_component_1.AppComponent, author_component_1.AuthorComponent, book_component_1.BookComponent, connectionString_component_1.ConnectionStringComponent, not_found_component_1.NotFoundComponent],
+            providers: [pagination_service_1.PagerService],
             bootstrap: [app_component_1.AppComponent]
         })
     ], AppModule);

@@ -15,26 +15,30 @@ var router_1 = require("@angular/router");
 var author_service_1 = require("../Services/author.service");
 var author_1 = require("../Models/author");
 require("rxjs/Rx");
+var pagination_service_1 = require("../Services/pagination.service");
 var AuthorComponent = (function () {
-    function AuthorComponent(serv, router, activateRoute) {
+    function AuthorComponent(serv, router, activateRoute, pagerService) {
         this.serv = serv;
         this.router = router;
         this.activateRoute = activateRoute;
+        this.pagerService = pagerService;
         this.authors = [];
+        this.pager = {};
         this.sub = activateRoute.params.subscribe();
-        this.loadAuthors();
     }
-    AuthorComponent.prototype.loadAuthors = function () {
+    AuthorComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.serv.getAuthors().subscribe(function (data) {
-            return _this.authors = data;
+            _this.authors = data;
+            _this.setPage(1);
         });
-        console.log("method loadBook in bookComponent" + this.authors);
+        console.log("method loadAuthors() in authorComponent" + this.authors);
     };
     AuthorComponent.prototype.addAuthor = function () {
         this.editedAuthor = new author_1.Author("", "", "");
         this.authors.push(this.editedAuthor);
         this.isNewRecord = true;
+        this.setPage(this.pager.totalPages);
     };
     AuthorComponent.prototype.editAuthor = function (author) {
         this.editedAuthor = new author_1.Author(author.id, author.name, author.surname);
@@ -51,16 +55,20 @@ var AuthorComponent = (function () {
         var _this = this;
         if (this.isNewRecord) {
             this.serv.createAuthor(this.editedAuthor).subscribe(function (resp) {
-                _this.statusMessage = 'Данные сохранены успешно';
-                _this.loadAuthors();
+                if (resp.ok) {
+                    _this.statusMessage = 'Данные сохранены успешно';
+                    _this.ngOnInit();
+                }
             });
             this.isNewRecord = false;
             this.editedAuthor = null;
         }
         else {
             this.serv.updateAuthor(this.editedAuthor.id, this.editedAuthor).subscribe(function (resp) {
-                _this.statusMessage = 'Данные успешно обновлены';
-                _this.loadAuthors();
+                if (resp.ok) {
+                    _this.statusMessage = 'Данные успешно обновлены';
+                    _this.ngOnInit();
+                }
             });
             this.editedAuthor = null;
         }
@@ -71,8 +79,10 @@ var AuthorComponent = (function () {
     AuthorComponent.prototype.deleteAuthor = function (author) {
         var _this = this;
         this.serv.deleteUser(author.id).subscribe(function (resp) {
-            _this.statusMessage = 'Данные успешно удалены',
-                _this.loadAuthors();
+            if (resp.ok) {
+                _this.statusMessage = 'Данные успешно удалены',
+                    _this.ngOnInit();
+            }
         });
     };
     AuthorComponent.prototype.routeToBooks = function (author) {
@@ -80,6 +90,15 @@ var AuthorComponent = (function () {
     };
     AuthorComponent.prototype.ngOnDestroy = function () {
         this.sub.unsubscribe();
+    };
+    AuthorComponent.prototype.setPage = function (page) {
+        if (page < 1 || page > this.pager.totalPages) {
+            return;
+        }
+        // get pager object from service
+        this.pager = this.pagerService.getPager(this.authors.length, page);
+        // get current page of items
+        this.pagedAuthorItems = this.authors.slice(this.pager.startIndex, this.pager.endIndex + 1);
     };
     __decorate([
         core_1.ViewChild('readOnlyTemplate'),
@@ -95,7 +114,7 @@ var AuthorComponent = (function () {
             templateUrl: 'ClientApp/Components/Views/author.component.html',
             providers: [author_service_1.AuthorService]
         }),
-        __metadata("design:paramtypes", [author_service_1.AuthorService, router_1.Router, router_1.ActivatedRoute])
+        __metadata("design:paramtypes", [author_service_1.AuthorService, router_1.Router, router_1.ActivatedRoute, pagination_service_1.PagerService])
     ], AuthorComponent);
     return AuthorComponent;
 }());

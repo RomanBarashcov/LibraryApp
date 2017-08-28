@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { PagerService } from './Services/pagination.service';
 
 import { AppComponent } from './Components/app.component';
 import { AuthorComponent } from './Components/author.component';
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule, RouterModule.forRoot(appRoutes)],
     declarations: [AppComponent, AuthorComponent, BookComponent, ConnectionStringComponent, NotFoundComponent],
+    providers: [PagerService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

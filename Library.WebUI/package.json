@@ -1,12 +1,17 @@
-﻿{
+{
   "name": "LibraryApp",
   "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RomanBarashcov/LibraryApp"
+  },
   "scripts": {
     "start": "concurrent \"npm run tsc:w\" \"npm run lite\" ",
     "lite": "lite-server",
     "tsc": "tsc",
     "tsc:w": "tsc -w"
   },
+  "license": "MIT",
   "dependencies": {
     "@angular/common": "~4.0.0",
     "@angular/compiler": "~4.0.0",
@@ -21,12 +26,14 @@
     "systemjs": "0.19.40",
     "core-js": "^2.4.1",
     "rxjs": "5.4.2",
-    "zone.js": "^0.8.4"
+    "zone.js": "^0.8.4",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "@types/node": "^6.0.46",
     "concurrently": "^3.2.0",
     "lite-server": "^2.2.2",
-    "typescript": "~2.4.1"
+    "typescript": "~2.4.1",
+    "@types/underscore": "^1.7.33"
   }
 }

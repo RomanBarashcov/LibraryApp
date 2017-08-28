@@ -1,12 +1,9 @@
 ﻿(function (global) {
     System.config({
         paths: {
-            // псевдоним для пути к модулям
             'npm:': 'node_modules/'
         },
-        // указываем загрузчику System, где искать модули
         map: {
-            // наше приложение будет находиться в папке app
             app: 'ClientApp',
             // пакеты angular
             '@angular/core': 'npm:@angular/core/bundles/core.umd.js',
@@ -19,7 +16,8 @@
             '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
             // остальные пакеты
             'rxjs': 'npm:rxjs',
-            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js'
+            'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
+            'underscore': 'npm:underscore/underscore.js'
         },
         // пакеты, которые указывают загрузчику System, как загружать файлы без имени и расширения
         packages: {
