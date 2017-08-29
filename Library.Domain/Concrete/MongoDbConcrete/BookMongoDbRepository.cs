@@ -36,55 +36,50 @@ namespace Library.Domain.Concrete
             
         }
 
-        public async Task<HttpResponseMessage> CreateBook(Book book)
+        public async Task<int> CreateBook(Book book)
         {
             return await Task.Run(() =>
             {
+                int DbResult = 0;
                 if (book != null)
                 {
                     BookMongoDb newBook = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
-                    db.Books.InsertOneAsync(newBook);
-                    return new HttpResponseMessage(HttpStatusCode.Created);
+                    var result = db.Books.InsertOneAsync(newBook);
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
             });
         }
 
-        public async Task<HttpResponseMessage> UpdateBook(string bookId, Book book)
+        public async Task<int> UpdateBook(string bookId, Book book)
         {
             return await Task.Run(() =>
             {
+                int DbResult = 0;
                 List<BookMongoDb> oldBookData = db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToList();
                 if (oldBookData != null && book != null)
                 {
                     BookMongoDb newBookData = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
-                    db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);
-                    return new HttpResponseMessage(HttpStatusCode.Created);
+                    var result =  db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
             });
         }
 
-        public async Task<HttpResponseMessage> DeleteBook(string bookId)
+        public async Task<int> DeleteBook(string bookId)
         {
             return await Task.Run(() =>
             {
+                int DbResult = 0;
                 List<BookMongoDb> deletingBook = db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToList();
                 if (deletingBook != null)
                 {
-                    db.Books.DeleteOneAsync(new BsonDocument("_id", new ObjectId(bookId)));
-                    return new HttpResponseMessage(HttpStatusCode.OK);
+                    var result = db.Books.DeleteOneAsync(new BsonDocument("_id", new ObjectId(bookId)));
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
+                
             });
         }
 

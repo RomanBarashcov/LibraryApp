@@ -28,22 +28,49 @@ namespace Library.WebUI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateAuthor([FromBody] Author author)
         {
-            HttpResponseMessage result = await repository.CreateAuthor(author);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (author != null)
+            {
+                DbResult = await repository.CreateAuthor(author);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.Created);
+                }
+            }
+            return RespMessage;
         }
 
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateAuthor(string id, [FromBody] Author author)
         {
-            HttpResponseMessage result = await repository.UpdateAuthor(id, author);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if(!String.IsNullOrEmpty(id) && author != null)
+            {
+                DbResult = await repository.UpdateAuthor(id, author);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.Created);
+                }
+            }
+            return RespMessage;
         }
 
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteAuthor(string id)
         {
-            HttpResponseMessage result = await repository.DeleteAuthor(id);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (!String.IsNullOrEmpty(id))
+            {
+                DbResult = await repository.DeleteAuthor(id);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.OK);
+                }
+            }
+            return RespMessage;
         }
     }
 }

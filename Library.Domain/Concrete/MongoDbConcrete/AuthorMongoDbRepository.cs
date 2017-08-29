@@ -35,45 +35,42 @@ namespace Library.Domain.Concrete
             });
         }
  
-        public async Task<HttpResponseMessage> CreateAuthor(Author author)
+        public async Task<int> CreateAuthor(Author author)
         {
             return await Task.Run(() => 
-            { 
+            {
+                int DbResult = 0;
                 if (author != null)
                 {
                     AuthorMongoDb newAuthor = new AuthorMongoDb{ Id = author.Id, Name = author.Name, Surname = author.Surname };
-                    db.Authors.InsertOneAsync(newAuthor);
-                    return new HttpResponseMessage(HttpStatusCode.Created);
+                    var result = db.Authors.InsertOneAsync(newAuthor);
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
             });
         }
 
-        public async Task<HttpResponseMessage> UpdateAuthor(string authorId, Author author)
+        public async Task<int> UpdateAuthor(string authorId, Author author)
         {
             return await Task.Run(() =>
             {
+                int DbResult = 0;
                 AuthorMongoDb oldAuthorData = db.Authors.Find(new BsonDocument("_id", new ObjectId(authorId))).FirstOrDefault();
                 if (oldAuthorData != null && author != null)
                 {
                     AuthorMongoDb newAuthorData = new AuthorMongoDb { Id = author.Id, Name = author.Name, Surname = author.Surname };
-                    db.Authors.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(authorId)), newAuthorData);
-                    return new HttpResponseMessage(HttpStatusCode.Created);
+                    var result = db.Authors.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(authorId)), newAuthorData);
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
             });
         }
 
-        public async Task<HttpResponseMessage> DeleteAuthor(string authorId)
+        public async Task<int> DeleteAuthor(string authorId)
         {
             return await Task.Run(() =>
             {
+                int DbResult = 0;
                 List<AuthorMongoDb> CollectionResult = db.Authors.Find(new BsonDocument("_id", new ObjectId(authorId))).ToList();
                 MongoDbAuthorDataHelper DbHelper = new MongoDbAuthorDataHelper(CollectionResult);
                 IEnumerable<Author> deletingAuthor = DbHelper.GetIEnumerubleDbResult();
@@ -81,12 +78,9 @@ namespace Library.Domain.Concrete
                 if (deletingAuthor != null)
                 {
                     var result = db.Authors.DeleteOneAsync(new BsonDocument("_id", new ObjectId(authorId)));
-                    return new HttpResponseMessage(HttpStatusCode.OK);
+                    DbResult = Convert.ToInt32(result.Id);
                 }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
-                }
+                return DbResult;
             });
         }
     }

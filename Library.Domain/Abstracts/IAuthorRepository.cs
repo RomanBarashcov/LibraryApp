@@ -11,8 +11,8 @@ namespace Library.Domain.Abstracts
     public interface IAuthorRepository
     {
         Task<IEnumerable<Author>> GetAllAuthors();
-        Task<HttpResponseMessage> CreateAuthor(Author author);
-        Task<HttpResponseMessage> UpdateAuthor(string authorId, Author author);
-        Task<HttpResponseMessage> DeleteAuthor(string authorId);
+        Task<int> CreateAuthor(Author author);
+        Task<int> UpdateAuthor(string authorId, Author author);
+        Task<int> DeleteAuthor(string authorId);
     }
 }

@@ -3,6 +3,7 @@ using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
@@ -27,22 +28,49 @@ namespace Library.WebUI.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> CreateBook([FromBody] Book book)
         {
-            HttpResponseMessage result = await repository.CreateBook(book);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if(book != null)
+            {
+                DbResult = await repository.CreateBook(book);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.Created);
+                }
+            }
+            return RespMessage;
         }
 
         [HttpPut]
         public async Task<HttpResponseMessage> UpdateBook(string id, [FromBody] Book book)
         {
-            HttpResponseMessage result = await repository.UpdateBook(id, book);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (!String.IsNullOrEmpty(id) && book != null)
+            {
+                DbResult = await repository.UpdateBook(id, book);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.Created);
+                }
+            }
+            return RespMessage;
         }
 
         [HttpDelete]
         public async Task<HttpResponseMessage> DeleteBook(string id)
         {
-            HttpResponseMessage result = await repository.DeleteBook(id);
-            return result;
+            int DbResult = 0;
+            HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            if (!String.IsNullOrEmpty(id))
+            {
+                DbResult = await repository.DeleteBook(id);
+                if(DbResult != 0)
+                {
+                    RespMessage = new HttpResponseMessage(HttpStatusCode.OK);
+                }
+            }
+            return RespMessage;
         }
 
         [Route("BookApi/GetBookByAuthorId/{id}")]
