@@ -37,15 +37,22 @@ var BookComponent = (function () {
         var _this = this;
         this.serv.getBookByAuthorId(id).subscribe(function (data) {
             _this.books = data;
-            _this.setPage(1);
+            _this.pagedBookItems = _this.books;
+            if (_this.pager.totalPages > 0) {
+                _this.setPage(_this.pager.totalPages);
+            }
             _this.hiddenAuthorId = id;
         });
     };
     BookComponent.prototype.addBook = function (authorId) {
+        console.log("function addBook is load " + authorId);
         this.editedBook = new book_1.Book("", 0, "", "", authorId);
         this.books.push(this.editedBook);
+        this.pagedBookItems = this.books;
         this.isNewRecord = true;
-        this.setPage(this.pager.totalPages);
+        if (this.pager.totalPages > 0) {
+            this.setPage(this.pager.totalPages);
+        }
     };
     BookComponent.prototype.editBook = function (book) {
         this.editedBook = new book_1.Book(book.id, book.year, book.name, book.description, book.authorId);
@@ -116,6 +123,7 @@ var BookComponent = (function () {
         core_2.Component({
             selector: 'books-app',
             templateUrl: 'ClientApp/Components/Views/book.component.html',
+            styleUrls: ['ClientApp/Components/Style/appStyle.css'],
             providers: [book_service_1.BookService]
         }),
         __metadata("design:paramtypes", [book_service_1.BookService, router_1.ActivatedRoute, pagination_service_1.PagerService])

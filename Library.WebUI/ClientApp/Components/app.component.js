@@ -23,6 +23,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: 'my-app',
             templateUrl: 'ClientApp/Components/Views/app.component.html',
+            styleUrls: ['ClientApp/Components/Style/appStyle.css']
         }),
         __metadata("design:paramtypes", [router_1.ActivatedRoute])
     ], AppComponent);

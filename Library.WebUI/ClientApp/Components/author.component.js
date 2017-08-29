@@ -36,8 +36,11 @@ var AuthorComponent = (function () {
     AuthorComponent.prototype.addAuthor = function () {
         this.editedAuthor = new author_1.Author("", "", "");
         this.authors.push(this.editedAuthor);
+        this.pagedAuthorItems = this.authors;
         this.isNewRecord = true;
-        this.setPage(this.pager.totalPages);
+        if (this.pager.totalPages > 0) {
+            this.setPage(this.pager.totalPages);
+        }
     };
     AuthorComponent.prototype.editAuthor = function (author) {
         this.editedAuthor = new author_1.Author(author.id, author.name, author.surname);
@@ -111,6 +114,7 @@ var AuthorComponent = (function () {
         core_2.Component({
             selector: 'authors-app',
             templateUrl: 'ClientApp/Components/Views/author.component.html',
+            styleUrls: ['ClientApp/Components/Style/appStyle.css'],
             providers: [author_service_1.AuthorService]
         }),
         __metadata("design:paramtypes", [author_service_1.AuthorService, router_1.Router, router_1.ActivatedRoute, pagination_service_1.PagerService])

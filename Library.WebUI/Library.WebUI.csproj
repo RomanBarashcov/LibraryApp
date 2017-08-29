@@ -265,6 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="ClientApp\Components\Style\appStyle.css" />
     <Content Include="ClientApp\Components\Views\author.component.html" />
     <Content Include="ClientApp\Components\Views\book.component.html" />
     <Content Include="ClientApp\Components\Views\connectionString.component.html" />

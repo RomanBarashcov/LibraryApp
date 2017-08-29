@@ -40,6 +40,7 @@ var ConnectionStringComponent = (function () {
         core_1.Component({
             selector: 'chose-connection-string',
             templateUrl: 'ClientApp/Components/Views/connectionString.component.html',
+            styleUrls: ['ClientApp/Components/Style/appStyle.css'],
             providers: [connectionString_service_1.connectionStringService]
         }),
         __metadata("design:paramtypes", [connectionString_service_1.connectionStringService, router_1.ActivatedRoute, router_1.Router])

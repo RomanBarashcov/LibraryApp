@@ -13,6 +13,7 @@ import { PagerService } from '../Services/pagination.service';
 @Component({
     selector: 'authors-app',
     templateUrl: 'ClientApp/Components/Views/author.component.html',
+    styleUrls: ['ClientApp/Components/Style/appStyle.css'],
     providers: [AuthorService]
 })
 export class AuthorComponent implements OnDestroy, OnInit {
@@ -35,7 +36,7 @@ export class AuthorComponent implements OnDestroy, OnInit {
 
     ngOnInit() {
         this.serv.getAuthors().subscribe((data) => {
-            this.authors = data
+            this.authors = data;
             this.setPage(1);
         });
     }
@@ -43,8 +44,11 @@ export class AuthorComponent implements OnDestroy, OnInit {
     addAuthor() {
         this.editedAuthor = new Author("", "", "");
         this.authors.push(this.editedAuthor);
+        this.pagedAuthorItems = this.authors;
         this.isNewRecord = true;
-        this.setPage(this.pager.totalPages);
+        if (this.pager.totalPages > 0) {
+            this.setPage(this.pager.totalPages);
+        }
     }
 
     editAuthor(author: Author) {
@@ -63,7 +67,6 @@ export class AuthorComponent implements OnDestroy, OnInit {
         if (this.isNewRecord) {
             this.serv.createAuthor(this.editedAuthor).subscribe((resp: Response) => {
                 if (resp.ok) {
-
                     this.statusMessage = 'Saved successfully!';
                     this.ngOnInit();
                 }

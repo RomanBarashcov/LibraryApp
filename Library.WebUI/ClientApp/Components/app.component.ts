@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
     selector: 'my-app',
     templateUrl: 'ClientApp/Components/Views/app.component.html',
+    styleUrls: ['ClientApp/Components/Style/appStyle.css']
 })
 export class AppComponent implements OnDestroy {
 

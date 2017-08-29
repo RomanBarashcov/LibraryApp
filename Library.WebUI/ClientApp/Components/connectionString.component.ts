@@ -7,6 +7,7 @@ import { connectionStringService } from '../Services/connectionString.service';
 @Component({
     selector: 'chose-connection-string',
     templateUrl: 'ClientApp/Components/Views/connectionString.component.html',
+    styleUrls: ['ClientApp/Components/Style/appStyle.css'],
     providers: [connectionStringService]
 })
 

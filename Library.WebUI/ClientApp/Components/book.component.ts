@@ -13,6 +13,7 @@ import { PagerService } from '../Services/pagination.service';
 @Component({
     selector: 'books-app',
     templateUrl: 'ClientApp/Components/Views/book.component.html',
+    styleUrls: ['ClientApp/Components/Style/appStyle.css'],
     providers: [BookService]
 })
 export class BookComponent implements OnDestroy {
@@ -44,17 +45,24 @@ export class BookComponent implements OnDestroy {
 
     loadBookByAuthor(id: string) {
         this.serv.getBookByAuthorId(id).subscribe((data) => {
-            this.books = data
-            this.setPage(1);
+            this.books = data;
+            this.pagedBookItems = this.books;
+            if (this.pager.totalPages > 0) {
+                this.setPage(this.pager.totalPages);
+            }
             this.hiddenAuthorId = id;
         });
     }
 
     addBook(authorId: string) {
+        console.log("function addBook is load " + authorId);
         this.editedBook = new Book("", 0, "", "", authorId);
         this.books.push(this.editedBook);
+        this.pagedBookItems = this.books;
         this.isNewRecord = true;
-        this.setPage(this.pager.totalPages);
+        if (this.pager.totalPages > 0) {
+            this.setPage(this.pager.totalPages);
+        }
     }
 
     editBook(book: Book) {
