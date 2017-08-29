@@ -106,12 +106,10 @@ export class AuthorComponent implements OnDestroy, OnInit {
         if (page < 1 || page > this.pager.totalPages) {
             return;
         }
-
         // get pager object from service
         this.pager = this.pagerService.getPager(this.authors.length, page);
 
         // get current page of items
         this.pagedAuthorItems = this.authors.slice(this.pager.startIndex, this.pager.endIndex + 1);
-
     }
 }

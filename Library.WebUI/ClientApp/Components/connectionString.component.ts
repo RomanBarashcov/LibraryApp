@@ -6,10 +6,7 @@ import { connectionStringService } from '../Services/connectionString.service';
 
 @Component({
     selector: 'chose-connection-string',
-    template: `<div><h2> Chose Db </h2>
-        <p><a (click)="choseDb(DefaultConnection)">MsSql</a> <a (click)="choseDb(MongoDbConnection)">MongoDb</a></p>
-    <div>{{error}}{{chosedDb}}</div>
-    </div>`,
+    templateUrl: 'ClientApp/Components/Views/connectionString.component.html',
     providers: [connectionStringService]
 })
 

@@ -2,6 +2,6 @@
 
 @Component({
     selector: 'not-found-app',
-    template: `<h3>Страница не найдена</h3>`
+    template: `<h3>404 Page not found !</h3>`
 })
 export class NotFoundComponent { }

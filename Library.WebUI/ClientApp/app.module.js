@@ -13,12 +13,13 @@ var router_1 = require("@angular/router");
 var http_1 = require("@angular/http");
 var pagination_service_1 = require("./Services/pagination.service");
 var app_component_1 = require("./Components/app.component");
+var home_component_1 = require("./Components/home.component");
 var author_component_1 = require("./Components/author.component");
 var book_component_1 = require("./Components/book.component");
 var connectionString_component_1 = require("./Components/connectionString.component");
 var not_found_component_1 = require("./Components/not-found.component");
 var appRoutes = [
-    { path: '', component: app_component_1.AppComponent },
+    { path: '', component: home_component_1.HomeComponent },
     { path: 'authors', component: author_component_1.AuthorComponent },
     { path: 'books', component: book_component_1.BookComponent },
     { path: 'booksByAuthor/:id', component: book_component_1.BookComponent },
@@ -31,7 +32,7 @@ var AppModule = (function () {
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule, router_1.RouterModule.forRoot(appRoutes)],
-            declarations: [app_component_1.AppComponent, author_component_1.AuthorComponent, book_component_1.BookComponent, connectionString_component_1.ConnectionStringComponent, not_found_component_1.NotFoundComponent],
+            declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, author_component_1.AuthorComponent, book_component_1.BookComponent, connectionString_component_1.ConnectionStringComponent, not_found_component_1.NotFoundComponent],
             providers: [pagination_service_1.PagerService],
             bootstrap: [app_component_1.AppComponent]
         })

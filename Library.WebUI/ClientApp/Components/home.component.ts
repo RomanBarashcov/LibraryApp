@@ -3,10 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 @Component({
-    selector: 'my-app',
-    templateUrl: 'ClientApp/Components/Views/app.component.html',
+    selector: 'home-component',
+    template: ``,
 })
-export class AppComponent implements OnDestroy {
+export class HomeComponent implements OnDestroy {
 
     private sub: Subscription;
     constructor(private activatedRoute: ActivatedRoute) {

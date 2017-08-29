@@ -267,6 +267,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="ClientApp\Components\Views\author.component.html" />
     <Content Include="ClientApp\Components\Views\book.component.html" />
+    <Content Include="ClientApp\Components\Views\connectionString.component.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -297,6 +298,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="package.json" />
+    <Content Include="ClientApp\Components\Views\app.component.html" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -341,6 +343,7 @@
     <TypeScriptCompile Include="ClientApp\Components\app.component.ts" />
     <TypeScriptCompile Include="ClientApp\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\Components\connectionString.component.ts" />
+    <TypeScriptCompile Include="ClientApp\Components\home.component.ts" />
     <TypeScriptCompile Include="ClientApp\Models\author.ts" />
     <TypeScriptCompile Include="ClientApp\Components\author.component.ts" />
     <TypeScriptCompile Include="ClientApp\Models\book.ts" />

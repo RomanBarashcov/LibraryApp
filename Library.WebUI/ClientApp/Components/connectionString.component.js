@@ -39,7 +39,7 @@ var ConnectionStringComponent = (function () {
     ConnectionStringComponent = __decorate([
         core_1.Component({
             selector: 'chose-connection-string',
-            template: "<div><h2> Chose Db </h2>\n        <p><a (click)=\"choseDb(DefaultConnection)\">MsSql</a> <a (click)=\"choseDb(MongoDbConnection)\">MongoDb</a></p>\n    <div>{{error}}{{chosedDb}}</div>\n    </div>",
+            templateUrl: 'ClientApp/Components/Views/connectionString.component.html',
             providers: [connectionString_service_1.connectionStringService]
         }),
         __metadata("design:paramtypes", [connectionString_service_1.connectionStringService, router_1.ActivatedRoute, router_1.Router])
