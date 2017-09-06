@@ -76,10 +76,10 @@ namespace Library.WebUI.Controllers
         }
 
         [Route("BookApi/GetBookByAuthorId/{id}")]
-        public async Task<HttpResponseMessage> GetBookByAuthorId(string id)
+        public async Task<IHttpActionResult> GetBookByAuthorId(string id)
         {
             IEnumerable<Book> Books = await repository.GetBookByAuthorId(id);
-            return (HttpResponseMessage)Books;
+            return Ok(Books);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Library.Domain.Helper.DataRequired.MongoDbDataRequired
         public async Task<bool> IsDataRequered(Author author)
         {
             bool IsDataNoEmpty = false;
-            if(author.Name != null && author.Surname != null)
+            if(!String.IsNullOrEmpty(author.Name) && !String.IsNullOrEmpty(author.Surname))
             {
                 IsDataNoEmpty = true;
             }

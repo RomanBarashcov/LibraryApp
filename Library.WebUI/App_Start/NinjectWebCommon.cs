@@ -83,20 +83,20 @@ namespace Library.WebUI.App_Start
         {
             if (DefaultConnection)
             {
-                kernel.Bind<IAuthorRepository>().To<AuthorRepository>().InSingletonScope();
-                kernel.Bind<IBookRepository>().To<BookRepository>().InSingletonScope();
-                kernel.Bind<IConvertDataHelper<AuthorMsSql, Author>>().To<MssqlAuthorConvert>().InSingletonScope();
-                kernel.Bind<IConvertDataHelper<BookMsSql, Book>>().To<MssqlBookDataConvert>().InSingletonScope();
+                kernel.Bind<IAuthorRepository>().To<AuthorRepository>();
+                kernel.Bind<IBookRepository>().To<BookRepository>();
+                kernel.Bind<IConvertDataHelper<AuthorMsSql, Author>>().To<MssqlAuthorConvert>();
+                kernel.Bind<IConvertDataHelper<BookMsSql, Book>>().To<MssqlBookDataConvert>();
             }
             else
             {
-                kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>().InSingletonScope();
-                kernel.Bind<IBookRepository>().To<BookMongoDbRepository>().InSingletonScope();
-                kernel.Bind<IConvertDataHelper<AuthorMongoDb, Author>>().To<MongoDbAuthorDataConvert>().InSingletonScope();
-                kernel.Bind<IConvertDataHelper<BookMongoDb, Book>>().To<MongoDbBookDataConvert>().InSingletonScope();
+                kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>();
+                kernel.Bind<IBookRepository>().To<BookMongoDbRepository>();
+                kernel.Bind<IConvertDataHelper<AuthorMongoDb, Author>>().To<MongoDbAuthorDataConvert>();
+                kernel.Bind<IConvertDataHelper<BookMongoDb, Book>>().To<MongoDbBookDataConvert>();
             }
-            kernel.Bind<IDataRequired<Author>>().To<AuthorDataRequired>().InSingletonScope();
-            kernel.Bind<IDataRequired<Book>>().To<BookDataRequired>().InSingletonScope();
+            kernel.Bind<IDataRequired<Author>>().To<AuthorDataRequired>();
+            kernel.Bind<IDataRequired<Book>>().To<BookDataRequired>();
 
         }        
     }
