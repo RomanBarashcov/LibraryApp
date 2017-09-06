@@ -63,15 +63,17 @@
         <input type="text" [(ngModel)]="editedAuthor.id" readonly disabled class="form-control" />
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedAuthor.name" class="form-control" />
+        <input type="text" name="authorName" [(ngModel)]="editedAuthor.name" class="form-control" #authorName="ngModel" required />
+        <p [hidden]="authorName.valid || authorName.untouched" class="danger">Enter the name!</p>
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedAuthor.surname" class="form-control" />
+        <input type="text" name="authorSurname" [(ngModel)]="editedAuthor.surname" class="form-control" #authorSurname="ngModel" required />
+        <p [hidden]="authorSurname.valid || authorSurname.untouched" class="danger">Enter the surname!</p>
     </td>
     <td>
-        <input type="button" value="Save" (click)="saveAuthor()" class="btn btn-success" />
+        <button [disabled]="authorName.invalid || authorSurname.invalid" (click)="saveAuthor()" class="btn btn-success" >Save</button>
     </td>
     <td>
-        <input type="button" value="Cencel" (click)="cancel()" class="btn btn-warning" />
+        <button (click)="cancel()" class="btn btn-warning" >Cencel</button>
     </td>
 </ng-template>

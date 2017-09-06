@@ -16,85 +16,76 @@ namespace Library.Domain.Concrete
     public class BookMongoDbRepository : IBookRepository
     {
         private IEnumerable<Book> result = null;
+        private IConvertDataHelper<BookMongoDb, Book> mongoDbDataConvert;
         LibraryMongoDbContext db = new LibraryMongoDbContext();
+
+        public BookMongoDbRepository(IConvertDataHelper<BookMongoDb, Book> mDbDataConvert)
+        {
+            this.mongoDbDataConvert = mDbDataConvert;
+        }
+
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
-            return await Task.Run(() =>
-            {
-                var builder = Builders<BookMongoDb>.Filter;
-                var filters = new List<FilterDefinition<BookMongoDb>>();
-                List<BookMongoDb> CollectionResult = db.Books.Find(builder.Empty).ToList();
+             var builder = Builders<BookMongoDb>.Filter;
+             var filters = new List<FilterDefinition<BookMongoDb>>();
+             List<BookMongoDb> CollectionResult = await db.Books.Find(builder.Empty).ToListAsync();
 
-                if (CollectionResult != null)
-                {
-                    MongoDbBookDataHelper DbHelper = new MongoDbBookDataHelper(CollectionResult);
-                    result = DbHelper.GetIEnumerubleDbResult();
-                }
-                return result;
-            });
+             if (CollectionResult != null)
+             {
+                 mongoDbDataConvert.InitData(CollectionResult);
+                 result = mongoDbDataConvert.GetIEnumerubleDbResult();
+             }
+             return result;
             
         }
 
         public async Task<int> CreateBook(Book book)
         {
-            return await Task.Run(() =>
+            int DbResult = 0;
+            if (book != null)
             {
-                int DbResult = 0;
-                if (book != null)
-                {
-                    BookMongoDb newBook = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
-                    var result = db.Books.InsertOneAsync(newBook);
-                    DbResult = Convert.ToInt32(result.Id);
-                }
-                return DbResult;
-            });
+                BookMongoDb newBook = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
+                await db.Books.InsertOneAsync(newBook);
+                DbResult = 1;
+            }
+            return DbResult;
         }
 
         public async Task<int> UpdateBook(string bookId, Book book)
         {
-            return await Task.Run(() =>
+            int DbResult = 0;
+            List<BookMongoDb> oldBookData = await db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToListAsync();
+            if (oldBookData != null && book != null)
             {
-                int DbResult = 0;
-                List<BookMongoDb> oldBookData = db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToList();
-                if (oldBookData != null && book != null)
-                {
-                    BookMongoDb newBookData = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
-                    var result =  db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);
-                    DbResult = Convert.ToInt32(result.Id);
-                }
-                return DbResult;
-            });
+                BookMongoDb newBookData = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
+                await db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);
+                DbResult = 1;
+            }
+            return DbResult;
         }
 
         public async Task<int> DeleteBook(string bookId)
         {
-            return await Task.Run(() =>
-            {
-                int DbResult = 0;
-                List<BookMongoDb> deletingBook = db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToList();
-                if (deletingBook != null)
-                {
-                    var result = db.Books.DeleteOneAsync(new BsonDocument("_id", new ObjectId(bookId)));
-                    DbResult = Convert.ToInt32(result.Id);
-                }
-                return DbResult;
-                
-            });
+             int DbResult = 0;
+             List<BookMongoDb> deletingBook = await db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToListAsync();
+             if (deletingBook != null)
+             {
+                await db.Books.DeleteOneAsync(new BsonDocument("_id", new ObjectId(bookId)));
+                DbResult = 1;
+             }
+             return DbResult;
         }
 
         public async Task<IEnumerable<Book>> GetBookByAuthorId(string authorId)
         {
-            return await Task.Run(() => 
-            { 
-                List<BookMongoDb> BooksByAuthor = db.Books.Find(new BsonDocument("AuthorId", authorId)).ToList();
-                if(BooksByAuthor != null)
-                {
-                    MongoDbBookDataHelper DbHelper = new MongoDbBookDataHelper(BooksByAuthor);
-                    result = DbHelper.GetIEnumerubleDbResult();
-                }
-                return result;
-            });
+             List<BookMongoDb> BooksByAuthor = await db.Books.Find(new BsonDocument("AuthorId", authorId)).ToListAsync();
+             if(BooksByAuthor != null)
+             {
+                 mongoDbDataConvert.InitData(BooksByAuthor);
+                 result = mongoDbDataConvert.GetIEnumerubleDbResult();
+             }
+             return result;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Library.Domain.Entities;
+﻿using Library.Domain.Abstracts;
+using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Helper
 {
-    public class MongoDbBookDataHelper
+    public class MongoDbBookDataConvert : IConvertDataHelper<BookMongoDb, Book>
     {
         private List<BookMongoDb> Books = new List<BookMongoDb>();
         private BookMongoDb BookMongoDB = new BookMongoDb();
@@ -15,7 +16,7 @@ namespace Library.Domain.Helper
         private List<Book> ListBook = new List<Book>();
         private IEnumerable<Book> result = null;
 
-        public MongoDbBookDataHelper(List<BookMongoDb> books)
+        public void InitData(List<BookMongoDb> books)
         {
             Books = books;
         }

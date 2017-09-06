@@ -61,21 +61,25 @@
         <input type="text" [(ngModel)]="editedBook.id" readonly disabled class="form-control" />
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedBook.year" class="form-control" />
+        <input type="text" name="bookYear" [(ngModel)]="editedBook.year" class="form-control" #bookYear="ngModel" required/>
+        <p [hidden]="bookYear.valid || bookYear.untouched" class="danger">Enter the year!</p>
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedBook.name" class="form-control" />
+        <input type="text" name="bookName" [(ngModel)]="editedBook.name" class="form-control" #bookName="ngModel" required />
+        <p [hidden]="bookName.valid || bookName.untouched" class="danger">Enter the Name!</p>
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedBook.description" class="form-control" />
+        <input type="text" name="bookDescription" [(ngModel)]="editedBook.description" class="form-control"  #bookDescription="ngModel" required/>
+        <p [hidden]="bookDescription.valid || bookDescription.untouched" class="danger">Enter the Description!</p>
     </td>
     <td>
-        <input type="text" [(ngModel)]="editedBook.authorId" class="form-control" />
+        <input type="text" name="authorId" [(ngModel)]="editedBook.authorId" class="form-control" #authorId="ngModel" required/>
+        <p [hidden]="authorId.valid || authorId.untouched" class="danger">Enter the authorId!</p>
     </td>
     <td>
-        <input type="button" value="Save" (click)="saveBook()" class="btn btn-success" />
+        <button [disabled]="bookYear.invalid || bookName.invalid || bookDescription.invalid || authorId.invalid" (click)="saveBook()" class="btn btn-success">Save</button>
     </td>
     <td>
-        <input type="button" value="Cencel" (click)="cancel()" class="btn btn-warning" />
+        <button (click)="cancel()" class="btn btn-warning">Cencel</button>
     </td>
 </ng-template>

@@ -248,7 +248,6 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AuthorApiController.cs" />
-    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BookApiController.cs" />
     <Compile Include="Controllers\ConnectionApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

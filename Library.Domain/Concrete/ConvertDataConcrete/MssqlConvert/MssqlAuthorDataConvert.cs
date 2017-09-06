@@ -1,4 +1,5 @@
-﻿using Library.Domain.Entities;
+﻿using Library.Domain.Abstracts;
+using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Helper
 {
-    public class MssqlAuthorDataHelper
+    public class MssqlAuthorConvert : IConvertDataHelper<AuthorMsSql, Author>
     {
         private List<AuthorMsSql> Authotrs = new List<AuthorMsSql>();
         private AuthorMsSql AuthorMssql = new AuthorMsSql();
@@ -15,7 +16,7 @@ namespace Library.Domain.Helper
         private List<Author> ListAuthor = new List<Author>();
         private IEnumerable<Author> result = null;
 
-        public MssqlAuthorDataHelper(List<AuthorMsSql> authors)
+        public void InitData(List<AuthorMsSql> authors)
         {
             Authotrs = authors;
         }

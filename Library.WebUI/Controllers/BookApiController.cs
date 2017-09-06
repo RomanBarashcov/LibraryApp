@@ -11,18 +11,20 @@ using System.Web.Http;
 
 namespace Library.WebUI.Controllers
 {
-    public class BookApiController : BaseApiController
+    public class BookApiController : ApiController
     {
         private IBookRepository repository;
-        public BookApiController(IBookRepository bookRepository)
+        private IDataRequired<Book> dataReqiered;
+        public BookApiController(IBookRepository bookRepository, IDataRequired<Book> dRequired)
         {
             this.repository = bookRepository;
+            this.dataReqiered = dRequired;
         }
 
-        public async Task<HttpResponseMessage> GetBooks()
+        public async Task<IHttpActionResult> GetBooks()
         {
             IEnumerable<Book> Books = await repository.GetAllBooks();
-            return ToJson(Books);
+            return Ok(Books);
         }
 
         [HttpPost]
@@ -30,7 +32,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if(book != null)
+            if(await dataReqiered.IsDataRequered(book))
             {
                 DbResult = await repository.CreateBook(book);
                 if(DbResult != 0)
@@ -46,7 +48,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if (!String.IsNullOrEmpty(id) && book != null)
+            if (!String.IsNullOrEmpty(id) && await dataReqiered.IsDataRequered(book))
             {
                 DbResult = await repository.UpdateBook(id, book);
                 if(DbResult != 0)
@@ -77,7 +79,7 @@ namespace Library.WebUI.Controllers
         public async Task<HttpResponseMessage> GetBookByAuthorId(string id)
         {
             IEnumerable<Book> Books = await repository.GetBookByAuthorId(id);
-            return ToJson(Books);
+            return (HttpResponseMessage)Books;
         }
     }
 }

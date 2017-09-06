@@ -11,18 +11,20 @@ using System.Web.Http;
 
 namespace Library.WebUI.Controllers
 {
-    public class AuthorApiController : BaseApiController
+    public class AuthorApiController : ApiController
     {
         private IAuthorRepository repository;
-        public AuthorApiController(IAuthorRepository authorRepository)
+        private IDataRequired<Author> dataReqiered;
+        public AuthorApiController(IAuthorRepository authorRepository, IDataRequired<Author> dReqiered)
         {
             this.repository = authorRepository;
+            this.dataReqiered = dReqiered;
         }
 
-        public async Task<HttpResponseMessage> GetAuthors()
+        public async Task<IHttpActionResult> GetAuthors()
         {
             IEnumerable<Author> Authors = await repository.GetAllAuthors();
-            return ToJson(Authors);    
+            return Ok(Authors);
         }
 
         [HttpPost]
@@ -30,7 +32,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if (author != null)
+            if (await dataReqiered.IsDataRequered(author))
             {
                 DbResult = await repository.CreateAuthor(author);
                 if(DbResult != 0)
@@ -46,7 +48,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if(!String.IsNullOrEmpty(id) && author != null)
+            if(!String.IsNullOrEmpty(id) && await dataReqiered.IsDataRequered(author))
             {
                 DbResult = await repository.UpdateAuthor(id, author);
                 if(DbResult != 0)

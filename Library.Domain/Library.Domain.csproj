@@ -68,8 +68,12 @@
   <ItemGroup>
     <Compile Include="Abstracts\IAuthorRepository.cs" />
     <Compile Include="Abstracts\IBookRepository.cs" />
+    <Compile Include="Abstracts\IConvertDataHelper.cs" />
+    <Compile Include="Abstracts\IDataRequired.cs" />
+    <Compile Include="Concrete\DataHelpersConcrete\BookDataRequired.cs" />
     <Compile Include="Concrete\MongoDbConcrete\AuthorMongoDbRepository.cs" />
     <Compile Include="Concrete\MongoDbConcrete\BookMongoDbRepository.cs" />
+    <Compile Include="Concrete\DataHelpersConcrete\AuthorDataRequired.cs" />
     <Compile Include="Concrete\MssqlConcrete\AuthorRepository.cs" />
     <Compile Include="Concrete\MssqlConcrete\BookRepository.cs" />
     <Compile Include="Concrete\LibraryContext.cs" />
@@ -80,16 +84,17 @@
     <Compile Include="Entities\MssqlEntities\AuthorMsSql.cs" />
     <Compile Include="Entities\Book.cs" />
     <Compile Include="Entities\MssqlEntities\BookMsSql.cs" />
-    <Compile Include="Helper\MongoDbDataHelper\MongoDbAuthorDataHelper.cs" />
-    <Compile Include="Helper\MongoDbDataHelper\MongoDbBookDataHelper.cs" />
-    <Compile Include="Helper\MssqlDataHelper\MssqlAuthorDataHelper.cs" />
-    <Compile Include="Helper\MssqlDataHelper\MssqlBookDataHelper.cs" />
+    <Compile Include="Concrete\ConvertDataConcrete\MongoDbConvert\MongoDbAuthorDataConvert.cs" />
+    <Compile Include="Concrete\ConvertDataConcrete\MongoDbConvert\MongoDbBookDataConvert.cs" />
+    <Compile Include="Concrete\ConvertDataConcrete\MssqlConvert\MssqlAuthorDataConvert.cs" />
+    <Compile Include="Concrete\ConvertDataConcrete\MssqlConvert\MssqlBookDataConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

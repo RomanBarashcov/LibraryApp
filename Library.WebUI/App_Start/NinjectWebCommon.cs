@@ -12,6 +12,9 @@ namespace Library.WebUI.App_Start
     using Ninject.Web.Common;
     using Domain.Abstracts;
     using Domain.Concrete;
+    using Domain.Entities;
+    using Domain.Helper.DataRequired.MongoDbDataRequired;
+    using Domain.Helper;
 
     public static class NinjectWebCommon 
     {
@@ -82,12 +85,19 @@ namespace Library.WebUI.App_Start
             {
                 kernel.Bind<IAuthorRepository>().To<AuthorRepository>().InSingletonScope();
                 kernel.Bind<IBookRepository>().To<BookRepository>().InSingletonScope();
+                kernel.Bind<IConvertDataHelper<AuthorMsSql, Author>>().To<MssqlAuthorConvert>().InSingletonScope();
+                kernel.Bind<IConvertDataHelper<BookMsSql, Book>>().To<MssqlBookDataConvert>().InSingletonScope();
             }
             else
             {
                 kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>().InSingletonScope();
                 kernel.Bind<IBookRepository>().To<BookMongoDbRepository>().InSingletonScope();
+                kernel.Bind<IConvertDataHelper<AuthorMongoDb, Author>>().To<MongoDbAuthorDataConvert>().InSingletonScope();
+                kernel.Bind<IConvertDataHelper<BookMongoDb, Book>>().To<MongoDbBookDataConvert>().InSingletonScope();
             }
+            kernel.Bind<IDataRequired<Author>>().To<AuthorDataRequired>().InSingletonScope();
+            kernel.Bind<IDataRequired<Book>>().To<BookDataRequired>().InSingletonScope();
+
         }        
     }
 }
