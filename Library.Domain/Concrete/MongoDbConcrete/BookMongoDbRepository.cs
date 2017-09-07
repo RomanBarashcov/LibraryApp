@@ -1,15 +1,9 @@
 ﻿using Library.Domain.Abstracts;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Library.Domain.Entities;
 using MongoDB.Driver;
 using MongoDB.Bson;
-using Library.Domain.Helper;
-using System.Net.Http;
-using System.Net;
 
 namespace Library.Domain.Concrete
 {
@@ -17,13 +11,14 @@ namespace Library.Domain.Concrete
     {
         private IEnumerable<Book> result = null;
         private IConvertDataHelper<BookMongoDb, Book> mongoDbDataConvert;
+        private IDataRequired<Book> dataReqiered;
         LibraryMongoDbContext db = new LibraryMongoDbContext();
 
-        public BookMongoDbRepository(IConvertDataHelper<BookMongoDb, Book> mDbDataConvert)
+        public BookMongoDbRepository(IConvertDataHelper<BookMongoDb, Book> mDbDataConvert, IDataRequired<Book> dReqiered)
         {
             this.mongoDbDataConvert = mDbDataConvert;
+            this.dataReqiered = dReqiered;
         }
-
 
         public async Task<IEnumerable<Book>> GetAllBooks()
         {
@@ -37,13 +32,12 @@ namespace Library.Domain.Concrete
                  result = mongoDbDataConvert.GetIEnumerubleDbResult();
              }
              return result;
-            
         }
 
         public async Task<int> CreateBook(Book book)
         {
             int DbResult = 0;
-            if (book != null)
+            if (dataReqiered.IsDataRequered(book))
             {
                 BookMongoDb newBook = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
                 await db.Books.InsertOneAsync(newBook);
@@ -56,7 +50,7 @@ namespace Library.Domain.Concrete
         {
             int DbResult = 0;
             List<BookMongoDb> oldBookData = await db.Books.Find(new BsonDocument("_id", new ObjectId(bookId))).ToListAsync();
-            if (oldBookData != null && book != null)
+            if (oldBookData != null && dataReqiered.IsDataRequered(book))
             {
                 BookMongoDb newBookData = new BookMongoDb { Id = book.Id, Year = book.Year, Name = book.Name, Description = book.Description, AuthorId = book.AuthorId };
                 await db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);

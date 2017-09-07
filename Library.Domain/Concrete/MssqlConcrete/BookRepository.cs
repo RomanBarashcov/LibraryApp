@@ -1,13 +1,9 @@
 ﻿using Library.Domain.Abstracts;
 using Library.Domain.Entities;
-using Library.Domain.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Domain.Concrete
@@ -16,11 +12,13 @@ namespace Library.Domain.Concrete
     {
         private IEnumerable<Book> result = null;
         private IConvertDataHelper<BookMsSql, Book> MsSqlDataConvert;
+        private IDataRequired<Book> dataReqiered;
         private LibraryContext db = new LibraryContext();
 
-        public BookRepository(IConvertDataHelper<BookMsSql, Book> msSqlDataConvert)
+        public BookRepository(IConvertDataHelper<BookMsSql, Book> msSqlDataConvert, IDataRequired<Book> dReqiered)
         {
             this.MsSqlDataConvert = msSqlDataConvert;
+            this.dataReqiered = dReqiered;
         }
 
         public async Task<IEnumerable<Book>> GetAllBooks()
@@ -38,7 +36,7 @@ namespace Library.Domain.Concrete
         public async Task<int> CreateBook(Book book)
         {
              int DbResult = 0;
-             if (book != null)
+             if (dataReqiered.IsDataRequered(book))
              {
                  int authorId = Convert.ToInt32(book.AuthorId);
                  BookMsSql newBook = new BookMsSql { Name = book.Name, Description = book.Description, Year = book.Year, AuthorId = authorId };
@@ -56,7 +54,7 @@ namespace Library.Domain.Concrete
              BookMsSql updatingBook = null;
              updatingBook = await db.Books.FindAsync(upBookId);
 
-             if (upBookId == Book_book_id)
+             if (upBookId == Book_book_id && dataReqiered.IsDataRequered(book))
              {
                  updatingBook.Year = book.Year;
                  updatingBook.Name = book.Name;

@@ -1,13 +1,8 @@
 ﻿using Library.Domain.Abstracts;
 using Library.Domain.Entities;
-using Library.Domain.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Domain.Concrete
@@ -16,11 +11,13 @@ namespace Library.Domain.Concrete
     {
         private IEnumerable<Author> result = null;
         private IConvertDataHelper<AuthorMsSql, Author> MsSqlDataConvert;
+        private IDataRequired<Author> dataReqiered;
         private LibraryContext db = new LibraryContext();
 
-        public AuthorRepository(IConvertDataHelper<AuthorMsSql, Author> msSqlDataConvert)
+        public AuthorRepository(IConvertDataHelper<AuthorMsSql, Author> msSqlDataConvert, IDataRequired<Author> dReqiered)
         {
             this.MsSqlDataConvert = msSqlDataConvert;
+            this.dataReqiered = dReqiered;
         }
 
         public async Task<IEnumerable<Author>> GetAllAuthors()
@@ -38,7 +35,7 @@ namespace Library.Domain.Concrete
         public async Task<int> CreateAuthor(Author author)
         {
              int DbResult = 0;
-             if (author != null)
+             if (dataReqiered.IsDataRequered(author))
              {
                   AuthorMsSql newAuthor = new AuthorMsSql { Name = author.Name, Surname = author.Surname };
                   db.Authors.Add(newAuthor);
@@ -55,7 +52,7 @@ namespace Library.Domain.Concrete
              AuthorMsSql updatingAuthor = null;
              updatingAuthor = await db.Authors.FindAsync(upAuthorId);
 
-             if (upAuthorId == Author_author_id)
+             if (upAuthorId == Author_author_id && dataReqiered.IsDataRequered(author))
              {
                  updatingAuthor.Name = author.Name;
                  updatingAuthor.Surname = author.Surname;

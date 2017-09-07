@@ -32,7 +32,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if (await dataReqiered.IsDataRequered(author))
+            if (dataReqiered.IsDataRequered(author))
             {
                 DbResult = await repository.CreateAuthor(author);
                 if(DbResult != 0)
@@ -48,7 +48,7 @@ namespace Library.WebUI.Controllers
         {
             int DbResult = 0;
             HttpResponseMessage RespMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
-            if(!String.IsNullOrEmpty(id) && await dataReqiered.IsDataRequered(author))
+            if(!String.IsNullOrEmpty(id) && dataReqiered.IsDataRequered(author))
             {
                 DbResult = await repository.UpdateAuthor(id, author);
                 if(DbResult != 0)

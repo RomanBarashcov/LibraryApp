@@ -1,15 +1,8 @@
 ﻿using Library.Domain.Abstracts;
 using Library.Domain.Entities;
-using Library.Domain.Helper;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 namespace Library.Domain.Concrete
 {
@@ -17,11 +10,13 @@ namespace Library.Domain.Concrete
     {
         private IEnumerable<Author> result = null;
         private IConvertDataHelper<AuthorMongoDb, Author> mongoDbDataConvert;
+        private IDataRequired<Author> dataReqiered;
         LibraryMongoDbContext db = new LibraryMongoDbContext();
 
-        public AuthorMongoDbRepository(IConvertDataHelper<AuthorMongoDb, Author> mDbDataConvert)
+        public AuthorMongoDbRepository(IConvertDataHelper<AuthorMongoDb, Author> mDbDataConvert, IDataRequired<Author> dReqiered)
         {
             this.mongoDbDataConvert = mDbDataConvert;
+            this.dataReqiered = dReqiered;
         }
 
         public async Task<IEnumerable<Author>> GetAllAuthors()
@@ -41,7 +36,7 @@ namespace Library.Domain.Concrete
         public async Task<int> CreateAuthor(Author author)
         {
              int DbResult = 0;
-             if (author != null)
+             if (dataReqiered.IsDataRequered(author))
              {
                 AuthorMongoDb newAuthor = new AuthorMongoDb{ Id = author.Id, Name = author.Name, Surname = author.Surname };
                 await db.Authors.InsertOneAsync(newAuthor);
@@ -54,7 +49,7 @@ namespace Library.Domain.Concrete
         {
               int DbResult = 0;
               AuthorMongoDb oldAuthorData = await db.Authors.Find(new BsonDocument("_id", new ObjectId(authorId))).FirstOrDefaultAsync();
-              if (oldAuthorData != null && author != null)
+              if (oldAuthorData != null && dataReqiered.IsDataRequered(author))
               {
                  AuthorMongoDb newAuthorData = new AuthorMongoDb { Id = author.Id, Name = author.Name, Surname = author.Surname };
                  await db.Authors.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(authorId)), newAuthorData);
