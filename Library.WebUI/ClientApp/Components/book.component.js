@@ -29,8 +29,11 @@ var BookComponent = (function () {
     BookComponent.prototype.loadBooks = function () {
         var _this = this;
         this.serv.getBooks().subscribe(function (data) {
-            _this.books = data,
-                _this.setPage(1);
+            _this.books = data;
+            _this.setPage(1);
+        }, function (error) {
+            _this.statusMessage = error;
+            console.log(error);
         });
     };
     BookComponent.prototype.loadBookByAuthor = function (id) {
@@ -42,11 +45,18 @@ var BookComponent = (function () {
                 _this.setPage(_this.pager.totalPages);
             }
             _this.hiddenAuthorId = id;
+        }, function (error) {
+            _this.statusMessage = error;
+            console.log(error);
         });
     };
     BookComponent.prototype.addBook = function (authorId) {
-        console.log("function addBook is load " + authorId);
-        this.editedBook = new book_1.Book("", 0, "", "", authorId);
+        if (authorId != undefined) {
+            this.editedBook = new book_1.Book("", 0, "", "", authorId);
+        }
+        else {
+            this.editedBook = new book_1.Book("", 0, "", "", "");
+        }
         this.books.push(this.editedBook);
         this.pagedBookItems = this.books;
         this.isNewRecord = true;
@@ -69,10 +79,15 @@ var BookComponent = (function () {
         var _this = this;
         if (this.isNewRecord) {
             this.serv.createBook(this.editedBook).subscribe(function (resp) {
+                console.log("saveBook function");
                 if (resp.ok) {
                     _this.statusMessage = 'Saved successfully!';
                     _this.loadBooks();
                 }
+            }, function (error) {
+                _this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                _this.loadBooks();
             });
             this.isNewRecord = false;
             this.editedBook = null;
@@ -83,12 +98,17 @@ var BookComponent = (function () {
                     _this.statusMessage = 'Updated successfully!';
                     _this.loadBooks();
                 }
+            }, function (error) {
+                _this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                _this.loadBooks();
             });
             this.editedBook = null;
         }
     };
     BookComponent.prototype.cancel = function () {
         this.editedBook = null;
+        this.loadBooks();
     };
     BookComponent.prototype.deleteBook = function (book) {
         var _this = this;
@@ -97,6 +117,9 @@ var BookComponent = (function () {
                 _this.statusMessage = 'Deleted successfully!',
                     _this.loadBooks();
             }
+        }, function (error) {
+            _this.statusMessage = error;
+            console.log(error);
         });
     };
     BookComponent.prototype.setPage = function (page) {

@@ -3,3 +3,6 @@
 a{
     cursor:pointer;
 }
+.danger{
+    color: red;
+}

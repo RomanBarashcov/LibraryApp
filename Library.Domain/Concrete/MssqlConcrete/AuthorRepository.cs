@@ -35,45 +35,67 @@ namespace Library.Domain.Concrete
         public async Task<int> CreateAuthor(Author author)
         {
              int DbResult = 0;
-             if (dataReqiered.IsDataRequered(author))
+             if (dataReqiered.IsDataNoEmpty(author))
              {
-                  AuthorMsSql newAuthor = new AuthorMsSql { Name = author.Name, Surname = author.Surname };
-                  db.Authors.Add(newAuthor);
-                  DbResult =  await db.SaveChangesAsync();
-             }
-             return DbResult;
+                AuthorMsSql newAuthor = new AuthorMsSql { Name = author.Name, Surname = author.Surname };
+                db.Authors.Add(newAuthor);
+                try
+                {
+                    DbResult = await db.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return DbResult;
+                }
+            }
+            return DbResult;
         }
 
         public async Task<int> UpdateAuthor(string authorId, Author author)
         {
-             int DbResult = 0;
-             int upAuthorId = Convert.ToInt32(authorId);
-             int Author_author_id = Convert.ToInt32(author.Id);
-             AuthorMsSql updatingAuthor = null;
-             updatingAuthor = await db.Authors.FindAsync(upAuthorId);
+            int DbResult = 0;
+            if (!String.IsNullOrEmpty(authorId) && dataReqiered.IsDataNoEmpty(author))
+            {
+                int oldDataAuthorId = Convert.ToInt32(authorId);
+                int newDataAuthorId = Convert.ToInt32(author.Id);
+                AuthorMsSql updatingAuthor = null;
+                updatingAuthor = await db.Authors.FindAsync(oldDataAuthorId);
 
-             if (upAuthorId == Author_author_id && dataReqiered.IsDataRequered(author))
-             {
-                 updatingAuthor.Name = author.Name;
-                 updatingAuthor.Surname = author.Surname;
-                 db.Entry(updatingAuthor).State = EntityState.Modified;
-                 DbResult = await db.SaveChangesAsync();
-             }
-             return DbResult;
+                if (oldDataAuthorId == newDataAuthorId)
+                {
+                    updatingAuthor.Name = author.Name;
+                    updatingAuthor.Surname = author.Surname;
+                    db.Entry(updatingAuthor).State = EntityState.Modified;
+                    try
+                    {
+                        DbResult = await db.SaveChangesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        return DbResult;
+                    }
+                }
+            }
+            return DbResult;
         }
 
         public async Task<int> DeleteAuthor(string authorId)
         {
-             int DbResult = 0;
-             int delAuthorId = Convert.ToInt32(authorId);
-             AuthorMsSql author = await db.Authors.FindAsync(delAuthorId);
+            int DbResult = 0;
+            if (!String.IsNullOrEmpty(authorId))
+            {
+                int delAuthorId = Convert.ToInt32(authorId);
+                AuthorMsSql author = await db.Authors.FindAsync(delAuthorId);
 
-             if (author != null)
-             {
-                 db.Authors.Remove(author);
-                 DbResult = await db.SaveChangesAsync();
-             }
-             return DbResult;
+                if (author != null)
+                {
+                    db.Authors.Remove(author);
+                    DbResult = await db.SaveChangesAsync();
+                }
+            }
+            return DbResult;
         }
     }
 }

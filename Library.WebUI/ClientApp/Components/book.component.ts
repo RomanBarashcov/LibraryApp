@@ -31,15 +31,20 @@ export class BookComponent implements OnDestroy {
     private allItems: any[];
     pagedBookItems: any[];
     pager: any = {};
+    error: any;
 
     constructor(private serv: BookService, private activateRoute: ActivatedRoute, private pagerService: PagerService) {
         this.sub = activateRoute.params.subscribe((params) => { params['id'] != null ? this.loadBookByAuthor(params['id']) : this.loadBooks() });
     }
 
     loadBooks() {
-        this.serv.getBooks().subscribe((data) => {
-            this.books = data,
-            this.setPage(1)
+        this.serv.getBooks().subscribe(data => {
+            this.books = data;
+            this.setPage(1);
+        },
+        error => {
+            this.statusMessage = error;
+            console.log(error);
         });
     }
 
@@ -51,12 +56,20 @@ export class BookComponent implements OnDestroy {
                 this.setPage(this.pager.totalPages);
             }
             this.hiddenAuthorId = id;
+        },
+        error => {
+            this.statusMessage = error;
+            console.log(error);
         });
     }
 
     addBook(authorId: string) {
-        console.log("function addBook is load " + authorId);
-        this.editedBook = new Book("", 0, "", "", authorId);
+        if (authorId != undefined) {
+            this.editedBook = new Book("", 0, "", "", authorId);
+        }
+        else {
+            this.editedBook = new Book("", 0, "", "", "");
+        }
         this.books.push(this.editedBook);
         this.pagedBookItems = this.books;
         this.isNewRecord = true;
@@ -80,26 +93,41 @@ export class BookComponent implements OnDestroy {
     saveBook() {
         if (this.isNewRecord) {
             this.serv.createBook(this.editedBook).subscribe((resp: Response) => {
+                console.log("saveBook function");
                 if (resp.ok) {
                     this.statusMessage = 'Saved successfully!';
                     this.loadBooks();
-                }
+                } 
+            },
+            error => {
+                this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                this.loadBooks();
             });
+
             this.isNewRecord = false;
             this.editedBook = null;
+
         } else {
             this.serv.updateBook(this.editedBook.id, this.editedBook).subscribe((resp: Response) => {
                 if (resp.ok) {
                     this.statusMessage = 'Updated successfully!';
                     this.loadBooks();
                 }
+            }, 
+            error => {
+                this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                this.loadBooks();
             });
+
             this.editedBook = null;
         }
     }
 
     cancel() {
         this.editedBook = null;
+        this.loadBooks();
     }
 
     deleteBook(book: Book) {
@@ -108,6 +136,10 @@ export class BookComponent implements OnDestroy {
                 this.statusMessage = 'Deleted successfully!',
                     this.loadBooks();
             }
+        },
+        error => {
+            this.statusMessage = error;
+            console.log(error);
         });
     }
 

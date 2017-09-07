@@ -8,6 +8,6 @@ namespace Library.Domain.Abstracts
 {
     public interface IDataRequired<T>
     {
-        bool IsDataRequered(T data);
+        bool IsDataNoEmpty(T data);
     }
 }

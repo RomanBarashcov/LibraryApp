@@ -70,10 +70,10 @@
     <Compile Include="Abstracts\IBookRepository.cs" />
     <Compile Include="Abstracts\IConvertDataHelper.cs" />
     <Compile Include="Abstracts\IDataRequired.cs" />
-    <Compile Include="Concrete\DataHelpersConcrete\BookDataRequired.cs" />
+    <Compile Include="Concrete\DataRequiredConcrete\BookDataRequired.cs" />
     <Compile Include="Concrete\MongoDbConcrete\AuthorMongoDbRepository.cs" />
     <Compile Include="Concrete\MongoDbConcrete\BookMongoDbRepository.cs" />
-    <Compile Include="Concrete\DataHelpersConcrete\AuthorDataRequired.cs" />
+    <Compile Include="Concrete\DataRequiredConcrete\AuthorDataRequired.cs" />
     <Compile Include="Concrete\MssqlConcrete\AuthorRepository.cs" />
     <Compile Include="Concrete\MssqlConcrete\BookRepository.cs" />
     <Compile Include="Concrete\LibraryContext.cs" />

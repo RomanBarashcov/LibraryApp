@@ -29,16 +29,21 @@ export class AuthorComponent implements OnDestroy, OnInit {
     private allItems: any[];
     pagedAuthorItems: any[];
     pager: any = {};
+    error: any;
 
     constructor(private serv: AuthorService, private router: Router, private activateRoute: ActivatedRoute, private pagerService: PagerService) {
         this.sub = activateRoute.params.subscribe();
     }
 
     ngOnInit() {
-        this.serv.getAuthors().subscribe((data) => {
+        this.serv.getAuthors().subscribe(data => {
             this.authors = data;
             this.setPage(1);
-        });
+        },
+         error => {
+            this.statusMessage = error;
+             console.log(error);
+         });
     }
 
     addAuthor() {
@@ -70,15 +75,27 @@ export class AuthorComponent implements OnDestroy, OnInit {
                     this.statusMessage = 'Saved successfully!';
                     this.ngOnInit();
                 }
+            },
+            error => {
+                this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                this.ngOnInit();
             });
+
             this.isNewRecord = false;
             this.editedAuthor = null;
+
         } else {
             this.serv.updateAuthor(this.editedAuthor.id, this.editedAuthor).subscribe((resp: Response) => {
                 if (resp.ok) {
                     this.statusMessage = 'Updated successfully!';
                     this.ngOnInit();
                 }
+            },
+            error => {
+                 this.statusMessage = error + ' Check all your data, and try again! ';
+                 console.log(error);
+                 this.ngOnInit();
             });
             this.editedAuthor = null;
         }
@@ -86,6 +103,7 @@ export class AuthorComponent implements OnDestroy, OnInit {
 
     cancel() {
         this.editedAuthor = null;
+        this.ngOnInit();
     }
 
     deleteAuthor(author: Author) {
@@ -94,6 +112,11 @@ export class AuthorComponent implements OnDestroy, OnInit {
                 this.statusMessage = 'Deleted successfully!',
                     this.ngOnInit();
             }
+        },
+        error => {
+             this.statusMessage = error;
+             console.log(error);
+             this.ngOnInit();
         });
     }
 

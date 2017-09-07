@@ -7,14 +7,14 @@ namespace Library.Domain.Helper.DataRequired.MongoDbDataRequired
 {
     public class AuthorDataRequired : IDataRequired<Author>
     {
-        public bool IsDataRequered(Author author)
+        public bool IsDataNoEmpty(Author author)
         {
-            bool IsDataNoEmpty = false;
+            bool isDataNoEmpty = false;
             if(!String.IsNullOrEmpty(author.Name) && !String.IsNullOrEmpty(author.Surname))
             {
-                IsDataNoEmpty = true;
+                isDataNoEmpty = true;
             }
-            return IsDataNoEmpty;
+            return isDataNoEmpty;
         }
     }
 }

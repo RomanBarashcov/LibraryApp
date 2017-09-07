@@ -31,6 +31,9 @@ var AuthorComponent = (function () {
         this.serv.getAuthors().subscribe(function (data) {
             _this.authors = data;
             _this.setPage(1);
+        }, function (error) {
+            _this.statusMessage = error;
+            console.log(error);
         });
     };
     AuthorComponent.prototype.addAuthor = function () {
@@ -61,6 +64,10 @@ var AuthorComponent = (function () {
                     _this.statusMessage = 'Saved successfully!';
                     _this.ngOnInit();
                 }
+            }, function (error) {
+                _this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                _this.ngOnInit();
             });
             this.isNewRecord = false;
             this.editedAuthor = null;
@@ -71,12 +78,17 @@ var AuthorComponent = (function () {
                     _this.statusMessage = 'Updated successfully!';
                     _this.ngOnInit();
                 }
+            }, function (error) {
+                _this.statusMessage = error + ' Check all your data, and try again! ';
+                console.log(error);
+                _this.ngOnInit();
             });
             this.editedAuthor = null;
         }
     };
     AuthorComponent.prototype.cancel = function () {
         this.editedAuthor = null;
+        this.ngOnInit();
     };
     AuthorComponent.prototype.deleteAuthor = function (author) {
         var _this = this;
@@ -85,6 +97,10 @@ var AuthorComponent = (function () {
                 _this.statusMessage = 'Deleted successfully!',
                     _this.ngOnInit();
             }
+        }, function (error) {
+            _this.statusMessage = error;
+            console.log(error);
+            _this.ngOnInit();
         });
     };
     AuthorComponent.prototype.routeToBooks = function (author) {
