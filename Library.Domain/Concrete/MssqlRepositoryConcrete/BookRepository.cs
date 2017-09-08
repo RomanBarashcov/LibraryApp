@@ -13,10 +13,11 @@ namespace Library.Domain.Concrete
         private IEnumerable<Book> result = null;
         private IConvertDataHelper<BookMsSql, Book> MsSqlDataConvert;
         private IDataRequired<Book> dataReqiered;
-        private LibraryContext db = new LibraryContext();
+        private LibraryContext db;
 
-        public BookRepository(IConvertDataHelper<BookMsSql, Book> msSqlDataConvert, IDataRequired<Book> dReqiered)
+        public BookRepository(LibraryContext context, IConvertDataHelper<BookMsSql, Book> msSqlDataConvert, IDataRequired<Book> dReqiered)
         {
+            this.db = context;
             this.MsSqlDataConvert = msSqlDataConvert;
             this.dataReqiered = dReqiered;
         }
@@ -39,16 +40,7 @@ namespace Library.Domain.Concrete
             int authorId = 0;
             if (dataReqiered.IsDataNoEmpty(book))
             {
-                try
-                {
-                    authorId = Convert.ToInt32(book.AuthorId);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    return DbResult;
-                }
-
+                authorId = Convert.ToInt32(book.AuthorId);
                 BookMsSql newBook = new BookMsSql { Name = book.Name, Description = book.Description, Year = book.Year, AuthorId = authorId };
                 db.Books.Add(newBook);
 

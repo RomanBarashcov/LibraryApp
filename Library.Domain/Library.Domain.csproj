@@ -72,11 +72,11 @@
     <Compile Include="Abstracts\IDataRequired.cs" />
     <Compile Include="Concrete\DataRequiredConcrete\BookDataRequiredMDB.cs" />
     <Compile Include="Concrete\DataRequiredConcrete\BookDataRequiredMS.cs" />
-    <Compile Include="Concrete\MongoDbConcrete\AuthorMongoDbRepository.cs" />
-    <Compile Include="Concrete\MongoDbConcrete\BookMongoDbRepository.cs" />
+    <Compile Include="Concrete\MongoDbRepositoryConcrete\AuthorMongoDbRepository.cs" />
+    <Compile Include="Concrete\MongoDbRepositoryConcrete\BookMongoDbRepository.cs" />
     <Compile Include="Concrete\DataRequiredConcrete\AuthorDataRequired.cs" />
-    <Compile Include="Concrete\MssqlConcrete\AuthorRepository.cs" />
-    <Compile Include="Concrete\MssqlConcrete\BookRepository.cs" />
+    <Compile Include="Concrete\MssqlRepositoryConcrete\AuthorRepository.cs" />
+    <Compile Include="Concrete\MssqlRepositoryConcrete\BookRepository.cs" />
     <Compile Include="Concrete\LibraryContext.cs" />
     <Compile Include="Concrete\LibraryMongoDbContext.cs" />
     <Compile Include="Entities\Author.cs" />

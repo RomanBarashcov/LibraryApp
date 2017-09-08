@@ -12,10 +12,11 @@ namespace Library.Domain.Concrete
         private IEnumerable<Author> result = null;
         private IConvertDataHelper<AuthorMsSql, Author> MsSqlDataConvert;
         private IDataRequired<Author> dataReqiered;
-        private LibraryContext db = new LibraryContext();
+        private LibraryContext db;
 
-        public AuthorRepository(IConvertDataHelper<AuthorMsSql, Author> msSqlDataConvert, IDataRequired<Author> dReqiered)
+        public AuthorRepository(LibraryContext context, IConvertDataHelper<AuthorMsSql, Author> msSqlDataConvert, IDataRequired<Author> dReqiered)
         {
+            this.db = context;
             this.MsSqlDataConvert = msSqlDataConvert;
             this.dataReqiered = dReqiered;
         }

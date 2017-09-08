@@ -26,15 +26,16 @@ namespace Library.WebUI.App_Start
         {
             if (conString == "DefaultConnection")
             {
-                DefaultConnection = true;
                 Stop();
-                Start();
+                DefaultConnection = true;
+                bootstrapper.Initialize(CreateKernel);
+
             }
             else
             {
-                DefaultConnection = false;
                 Stop();
-                Start();
+                DefaultConnection = false;
+                bootstrapper.Initialize(CreateKernel);
             }
         }
 
@@ -43,6 +44,8 @@ namespace Library.WebUI.App_Start
         /// </summary>
         public static void Start() 
         {
+            DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
+            DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
             bootstrapper.Initialize(CreateKernel);
         }
         
@@ -51,6 +54,7 @@ namespace Library.WebUI.App_Start
         /// </summary>
         public static void Stop()
         {
+            bootstrapper.Kernel.Dispose();
             bootstrapper.ShutDown();
         }
         
@@ -84,16 +88,16 @@ namespace Library.WebUI.App_Start
         {
             if (DefaultConnection)
             {
-                kernel.Bind<IAuthorRepository>().To<AuthorRepository>();
-                kernel.Bind<IBookRepository>().To<BookRepository>();
+                kernel.Bind<IAuthorRepository>().To<AuthorRepository>().WithConstructorArgument("context", new LibraryContext());
+                kernel.Bind<IBookRepository>().To<BookRepository>().WithConstructorArgument("context", new LibraryContext());
                 kernel.Bind<IConvertDataHelper<AuthorMsSql, Author>>().To<MssqlAuthorConvert>();
                 kernel.Bind<IConvertDataHelper<BookMsSql, Book>>().To<MssqlBookDataConvert>();
                 kernel.Bind<IDataRequired<Book>>().To<BookDataRequiredMS>();
             }
             else
             {
-                kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>();
-                kernel.Bind<IBookRepository>().To<BookMongoDbRepository>();
+                kernel.Bind<IAuthorRepository>().To<AuthorMongoDbRepository>().WithConstructorArgument("context", new LibraryMongoDbContext());
+                kernel.Bind<IBookRepository>().To<BookMongoDbRepository>().WithConstructorArgument("context", new LibraryMongoDbContext());
                 kernel.Bind<IConvertDataHelper<AuthorMongoDb, Author>>().To<MongoDbAuthorDataConvert>();
                 kernel.Bind<IConvertDataHelper<BookMongoDb, Book>>().To<MongoDbBookDataConvert>();
                 kernel.Bind<IDataRequired<Book>>().To<BookDataRequiredMDB>();

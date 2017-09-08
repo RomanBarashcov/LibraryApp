@@ -13,10 +13,11 @@ namespace Library.Domain.Concrete
         private IEnumerable<Book> result = null;
         private IConvertDataHelper<BookMongoDb, Book> mongoDbDataConvert;
         private IDataRequired<Book> dataReqiered;
-        LibraryMongoDbContext db = new LibraryMongoDbContext();
+        LibraryMongoDbContext db;
 
-        public BookMongoDbRepository(IConvertDataHelper<BookMongoDb, Book> mDbDataConvert, IDataRequired<Book> dReqiered)
+        public BookMongoDbRepository(LibraryMongoDbContext context, IConvertDataHelper<BookMongoDb, Book> mDbDataConvert, IDataRequired<Book> dReqiered)
         {
+            this.db = context;
             this.mongoDbDataConvert = mDbDataConvert;
             this.dataReqiered = dReqiered;
         }
