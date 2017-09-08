@@ -61,8 +61,8 @@
         <input type="text" [(ngModel)]="editedBook.id" readonly disabled class="form-control" />
     </td>
     <td>
-        <input type="text" name="bookYear" [(ngModel)]="editedBook.year" class="form-control" #bookYear="ngModel" required/>
-        <p [hidden]="bookYear.valid || bookYear.untouched" class="danger">Enter the year!</p>
+        <input type="text" name="bookYear" [(ngModel)]="editedBook.year" class="form-control" #bookYear="ngModel" required pattern="[0-9]{4}"/>
+        <p [hidden]="bookYear.valid || bookYear.untouched || editedBook.year != 0" class="danger">Enter the correct year!</p>
     </td>
     <td>
         <input type="text" name="bookName" [(ngModel)]="editedBook.name" class="form-control" #bookName="ngModel" required />
