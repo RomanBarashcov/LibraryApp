@@ -46,9 +46,8 @@ namespace Library.Domain.Concrete
                     await db.Authors.InsertOneAsync(newAuthor);
                     DbResult = 1;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
                     return DbResult;
                 }
             }
@@ -69,9 +68,8 @@ namespace Library.Domain.Concrete
                         await db.Authors.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(authorId)), newAuthorData);
                         DbResult = 1;
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine(ex.Message);
                         return DbResult;
                     }
                 }

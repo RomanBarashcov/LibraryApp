@@ -33,9 +33,8 @@ namespace Library.Domain.Concrete.DataRequiredConcrete
                 bAuthorId = Convert.ToInt32(bookAuthorId);
                 IsConveted = true;
             }
-            catch (Exception ex)
+            catch
             {
-                Console.WriteLine(ex.Message);
                 return IsConveted;
             }
 

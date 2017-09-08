@@ -48,9 +48,8 @@ namespace Library.Domain.Concrete
                 {
                     DbResult = await db.SaveChangesAsync();
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
                     return DbResult;
                 }
             }
@@ -79,9 +78,8 @@ namespace Library.Domain.Concrete
                     {
                         DbResult = await db.SaveChangesAsync();
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine(ex.Message);
                         return DbResult;
                     }
                 }

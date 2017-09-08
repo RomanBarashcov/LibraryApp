@@ -47,9 +47,8 @@ namespace Library.Domain.Concrete
                     await db.Books.InsertOneAsync(newBook);
                     DbResult = 1;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
                     return DbResult;
                 }
             }
@@ -70,9 +69,8 @@ namespace Library.Domain.Concrete
                         await db.Books.ReplaceOneAsync(new BsonDocument("_id", new ObjectId(bookId)), newBookData);
                         DbResult = 1;
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine(ex.Message);
                         return DbResult;
                     }
                 }
