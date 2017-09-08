@@ -15,6 +15,7 @@ namespace Library.WebUI.App_Start
     using Domain.Entities;
     using Domain.Helper.DataRequired.MongoDbDataRequired;
     using Domain.Helper;
+    using Domain.Concrete.DataRequiredConcrete;
 
     public static class NinjectWebCommon 
     {
@@ -87,6 +88,7 @@ namespace Library.WebUI.App_Start
                 kernel.Bind<IBookRepository>().To<BookRepository>();
                 kernel.Bind<IConvertDataHelper<AuthorMsSql, Author>>().To<MssqlAuthorConvert>();
                 kernel.Bind<IConvertDataHelper<BookMsSql, Book>>().To<MssqlBookDataConvert>();
+                kernel.Bind<IDataRequired<Book>>().To<BookDataRequiredMS>();
             }
             else
             {
@@ -94,10 +96,9 @@ namespace Library.WebUI.App_Start
                 kernel.Bind<IBookRepository>().To<BookMongoDbRepository>();
                 kernel.Bind<IConvertDataHelper<AuthorMongoDb, Author>>().To<MongoDbAuthorDataConvert>();
                 kernel.Bind<IConvertDataHelper<BookMongoDb, Book>>().To<MongoDbBookDataConvert>();
+                kernel.Bind<IDataRequired<Book>>().To<BookDataRequiredMDB>();
             }
             kernel.Bind<IDataRequired<Author>>().To<AuthorDataRequired>();
-            kernel.Bind<IDataRequired<Book>>().To<BookDataRequired>();
-
         }        
     }
 }

@@ -70,7 +70,8 @@
     <Compile Include="Abstracts\IBookRepository.cs" />
     <Compile Include="Abstracts\IConvertDataHelper.cs" />
     <Compile Include="Abstracts\IDataRequired.cs" />
-    <Compile Include="Concrete\DataRequiredConcrete\BookDataRequired.cs" />
+    <Compile Include="Concrete\DataRequiredConcrete\BookDataRequiredMDB.cs" />
+    <Compile Include="Concrete\DataRequiredConcrete\BookDataRequiredMS.cs" />
     <Compile Include="Concrete\MongoDbConcrete\AuthorMongoDbRepository.cs" />
     <Compile Include="Concrete\MongoDbConcrete\BookMongoDbRepository.cs" />
     <Compile Include="Concrete\DataRequiredConcrete\AuthorDataRequired.cs" />

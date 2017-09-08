@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.Concrete
 {
-    public class BookDataRequired : IDataRequired<Book>
+    public class BookDataRequiredMDB : IDataRequired<Book>
     {
         public bool IsDataNoEmpty(Book book)
         {
@@ -17,24 +17,6 @@ namespace Library.Domain.Concrete
             }
 
             return isDataNoEmpty;
-        }
-
-        private bool IsDataConvertingCorrect(string bookAuthorId)
-        {
-            bool IsConveted = false;
-            int bAuthorId = 0;
-
-            try
-            {
-                bAuthorId = Convert.ToInt32(bookAuthorId);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return IsConveted;
-            }
-
-            return IsConveted;
         }
     }
 }
